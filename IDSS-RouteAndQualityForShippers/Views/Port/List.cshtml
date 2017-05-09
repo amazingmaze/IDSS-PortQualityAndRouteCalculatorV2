@@ -1,0 +1,113 @@
+﻿@model IDSS_RouteAndQualityForShippers.Models.ViewModels.PortListViewModel
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+@using (Html.BeginForm("Route", "Port", FormMethod.Post)){ 
+    <table class="table">
+        <tr>
+            <th>
+            
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().RegionIndex)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().Position)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().HarborSizeCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().Shelter)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ports.First().MaxSizeVessel)
+            </th>
+            <th></th>
+        </tr>
+        
+        @for (var i = 0; i < Model.Ports.Count; i++) {
+
+
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(modelItem => Model.Ports[i].IsSelected)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].RegionIndex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Name)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Country)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Position)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].HarborSizeCode)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].HarborSizeCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Shelter)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Shelter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].MaxSizeVessel)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].MaxSizeVessel)
+                </td>
+
+            </tr>
+        }
+
+        
+        @*@foreach (var item in Model.Ports)
+        {
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(modelItem => item.IsSelected)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegionIndex)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Position)
+                    @Html.HiddenFor(modelItem => item.Position)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HarborSizeCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shelter)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MaxSizeVessel)
+                </td>
+
+            </tr>
+        }*@
+    
+    </table>
+    <p>Calculate route and fuel cost</p>
+    <button type="submit" class="btn btn-default">Calculate</button>
+}

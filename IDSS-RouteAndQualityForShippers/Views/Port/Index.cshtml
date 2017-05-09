@@ -1,0 +1,30 @@
+﻿@model IDSS_RouteAndQualityForShippers.Models.ViewModels.PortSelectViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Enter information</h2>
+
+
+@using (Html.BeginForm("List", "Port", FormMethod.Post))
+{
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Country)
+        @Html.TextBoxFor(m => m.Country, new { @class = "form-control", autofocus = "autofocus", placeholder = "eg. SE" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.MaxSizeVessel)
+        @Html.TextBoxFor(m => m.MaxSizeVessel, new { @class = "form-control", autofocus = "autofocus", placeholder = "eg. L" })
+        <p>Add a legend over how to decide the size of the ship. Eg. L = 100 - 150m </p>
+    </div>
+
+    <p> Here we want to add information regarding the fuel consumption of the ship. Needed to calculate fuel costs.</p>
+
+    <button type="submit" class="btn btn-default">Search</button>
+}
+
+
+

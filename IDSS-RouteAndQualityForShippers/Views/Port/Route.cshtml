@@ -1,0 +1,12 @@
+﻿@model List<string>
+@{
+    ViewBag.Title = "Route";
+}
+
+<h2>Route</h2>
+<p>Locations:</p>
+@foreach (var loc in Model)
+{
+    <p>@loc</p>
+}
+
