@@ -12,8 +12,8 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         public string Name { get; set; }
         public string Country { get; set; }
 
-        // The Lat & Long combined
-        public string Position { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
         //L = Large, M = Medium, S = Small, V = Very Small, U = Unkwown
         public string HarborSizeCode { get; set; }

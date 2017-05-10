@@ -27,10 +27,19 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortSelectViewModel viewModel)
         {
-            // TODO: ADD PAGENATION
+
+            // Convert ship length
+
+            // Type of lifts required
+
+            // Average speed 
+
+
+
+            // TODO: ADD PAGENATION & AND PROPER QUERIES
             var ports = _context.Ports.
-                Where(p => p.Country == viewModel.Country).
-                Where(p => p.MaxSizeVessel == viewModel.MaxSizeVessel);
+                Where(p => p.Country == viewModel.Country.ToUpper()).
+                Where(p => p.MaxSizeVessel == viewModel.MaxSizeVessel.ToUpper());
 
             var listOfPorts = new PortListViewModel();
             foreach (var port in ports)
@@ -42,7 +51,8 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                     MaxSizeVessel = port.MaxSizeVessel,
                     Name = port.Name,
                     HarborSizeCode = port.HarborSizeCode,
-                    Position = port.Position,
+                    Latitude = port.Latitude,
+                    Longitude = port.Longitude,
                     RegionIndex = port.RegionIndex,
                     Shelter = port.Shelter,
                     Id = port.Id
@@ -59,13 +69,17 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         {
 
             // Get locations of each of the selected ports
-            var locations = new List<string>();
+            var locations = new List<List<string>>();
 
             foreach (var item in viewModel.Ports)
             {
                 if (item.IsSelected)
                 {
-                    locations.Add(item.Position);
+                    var loc = new List<string>();
+                    loc.Add(item.Longitude);
+                    loc.Add(item.Latitude);
+                    loc.Add(item.Name);
+                    locations.Add(loc);
                 }
             }
 
@@ -78,6 +92,8 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             // Calculate route
 
             // Return a view with the map and added waypoints
+            // TODO: Create a google map with waypoints
+
             return View(locations);
         }
 

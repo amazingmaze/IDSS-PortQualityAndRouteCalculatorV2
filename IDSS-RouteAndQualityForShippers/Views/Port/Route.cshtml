@@ -1,12 +1,71 @@
-﻿@model List<string>
+﻿@model List<List<string>>
 @{
     ViewBag.Title = "Route";
 }
 
-<h2>Route</h2>
-<p>Locations:</p>
-@foreach (var loc in Model)
-{
-    <p>@loc</p>
-}
+<head>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.1.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://openlayers.org/en/v4.1.1/build/ol.js" type="text/javascript"></script>
+    <title>OpenLayers example</title>
+</head>
+<body>
+    <h2>Route</h2>
+    <div id="map" class="map"></div>
+<script type="text/javascript">
 
+    
+    //http://jsfiddle.net/6RS2z/356/
+
+    var vectorSource = new ol.source.Vector({
+      //create empty vector
+    });
+
+
+    @foreach (var item in Model)
+    {
+        <text>
+        var iconFeature = new ol.Feature({
+            geometry: new
+                ol.geom.Point(ol.proj.transform([@item[0], @item[1]], 'EPSG:4326', 'EPSG:3857')),
+            name: '@item[2]'
+        });
+        vectorSource.addFeature(iconFeature);
+
+        </text>
+    }
+
+    var iconStyle = new ol.style.Style({
+        image: new ol.style.Icon(({
+            anchor: [0.5, 0.5],
+            anchorXUnits: 'fraction',
+            anchorYUnits: 'fraction',
+            opacity: 0.75,
+            //src: 'http://openlayers.org/en/v3.9.0/examples/data/icon.png'
+            src: '/Content/sea_port.png'
+        }))
+    });
+   
+    //add the feature vector to the layer vector, and apply a style to whole layer
+    var vectorLayer = new ol.layer.Vector({
+      source: vectorSource,
+      style: iconStyle
+    });
+
+    var map = new ol.Map({
+      layers: [new ol.layer.Tile({ source: new ol.source.OSM() }), vectorLayer],
+      target: document.getElementById('map'),
+      view: new ol.View({
+        center: [0, 0],
+        zoom: 2
+      })
+    });
+
+
+</script>
+</body>

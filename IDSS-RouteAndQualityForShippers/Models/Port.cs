@@ -15,18 +15,8 @@ namespace IDSS_RouteAndQualityForShippers.Models
         public string Name { get; set; }
         public string Country { get; set; }
 
-        public int LatDegrees { get; set; }
-        public int LatMinutes { get; set; }
-
-        public string LatHemisphere { get; set; }
-
-        public int LongDegrees { get; set; }
-        public int LongMinutes { get; set; }
-
-        public string LongHemisphere { get; set; }
-
-        // The Lat & Long combined
-        public string Position { get; set; }
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
 
         //L = Large, M = Medium, S = Small, V = Very Small, U = Unkwown
         public string HarborSizeCode { get; set; }
@@ -55,14 +45,19 @@ namespace IDSS_RouteAndQualityForShippers.Models
 
         public void SetPosition(int latD, int latM, string latH, int lonD, int lonM, string lonH)
         {
-            LatDegrees = latD;
-            LatMinutes = latM;
-            LatHemisphere = latH;
-            LongDegrees = lonD;
-            LongMinutes = lonM;
-            LongHemisphere = lonH;
+            Latitude = ConvertDmsToLatLong(latD, latM, latH);
+            Longitude = ConvertDmsToLatLong(lonD, lonM, lonH);
+        }
 
-            Position = $"{latD}{latM}{latH}{lonD}{lonM}{lonH}";
+        public string ConvertDmsToLatLong(int degrees, int minutes, string direction)
+        {
+
+            var position = Math.Round(degrees + (double)minutes / 60 + 1.0 / 3600, 5);
+
+            if (direction == "S" || direction == "W")
+                position = position * -1;
+
+            return position.ToString();
         }
 
     }

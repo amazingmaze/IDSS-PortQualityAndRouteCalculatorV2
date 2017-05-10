@@ -22,7 +22,9 @@
                 @Html.DisplayNameFor(model => model.Ports.First().Country)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ports.First().Position)
+                @Html.DisplayNameFor(model => model.Ports.First().Latitude)
+            </th><th>
+                @Html.DisplayNameFor(model => model.Ports.First().Longitude)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ports.First().HarborSizeCode)
@@ -55,8 +57,11 @@
                     @Html.HiddenFor(modelItem => Model.Ports[i].Country)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => Model.Ports[i].Position)
-                    @Html.HiddenFor(modelItem => Model.Ports[i].Position)
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Latitude)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Latitude)
+                </td><td>
+                    @Html.DisplayFor(modelItem => Model.Ports[i].Longitude)
+                    @Html.HiddenFor(modelItem => Model.Ports[i].Longitude)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => Model.Ports[i].HarborSizeCode)

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Web;
@@ -48,12 +49,16 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
         {
             // Load XML document
 
+            var count = 0;
 
             var doc = XDocument.Load(MapPath("~/App_Data/wpi.xml"));
 
             // For every entry in the XML document
             foreach (var xe in doc.Descendants("Wpi_x0020_Data"))
             {
+                if (count == 5000)
+                    break;
+
                 var regionIndex = int.Parse(xe.Descendants(XName.Get("Region_index")).First().Value);
                 var country = xe.Descendants(XName.Get("Wpi_country_code")).First().Value;
                 var name = xe.Descendants(XName.Get("Main_port_name")).First().Value;
@@ -73,6 +78,8 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
                 var port = new Port(regionIndex, name, country, harborSizeCode, shelter, maxSizeVessel);
                 port.SetPosition(latD, latM, latH, lonD, lonM, lonH);
                 context.Ports.AddOrUpdate(port);
+
+                count++;
 
             }
         }
