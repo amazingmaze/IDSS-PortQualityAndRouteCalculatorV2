@@ -27,19 +27,17 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortSelectViewModel viewModel)
         {
-
             // Convert ship length
 
             // Type of lifts required
 
             // Average speed 
 
-
-
-            // TODO: ADD PAGENATION & AND PROPER QUERIES
-            var ports = _context.Ports.
-                Where(p => p.Country == viewModel.Country.ToUpper()).
-                Where(p => p.MaxSizeVessel == viewModel.MaxSizeVessel.ToUpper());
+            // TODO: ADD PAGENATION & AND PROPER QUERIES 
+            var ports = _context.Ports.ToList();
+            //var ports = _context.Ports.
+            //    Where(p => p.Country == viewModel.Country.ToUpper()).
+            //    Where(p => p.MaxSizeVessel == viewModel.MaxSizeVessel.ToUpper());
 
             var listOfPorts = new PortListViewModel();
             foreach (var port in ports)
@@ -67,13 +65,12 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult Route(PortListViewModel viewModel)
         {
-
             // Get locations of each of the selected ports
             var locations = new List<List<string>>();
 
-            foreach (var item in viewModel.Ports)
+            if (viewModel.SelectAll)
             {
-                if (item.IsSelected)
+                foreach (var item in viewModel.Ports)
                 {
                     var loc = new List<string>();
                     loc.Add(item.Longitude);
@@ -82,6 +79,23 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                     locations.Add(loc);
                 }
             }
+            else
+            {
+                foreach (var item in viewModel.Ports)
+                {
+                    if (item.IsSelected)
+                    {
+                        var loc = new List<string>();
+                        loc.Add(item.Longitude);
+                        loc.Add(item.Latitude);
+                        loc.Add(item.Name);
+                        locations.Add(loc);
+                    }
+                }
+            }
+
+
+
 
             Debug.WriteLine("Number of locations: " + locations.Count);
 
@@ -96,6 +110,5 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
 
             return View(locations);
         }
-
     }
 }

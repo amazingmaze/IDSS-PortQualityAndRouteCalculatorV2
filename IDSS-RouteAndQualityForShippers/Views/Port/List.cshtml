@@ -10,7 +10,8 @@
     <table class="table">
         <tr>
             <th>
-            
+                @Html.CheckBoxFor(modelItem => Model.SelectAll)
+                @Html.HiddenFor(modelItem => Model.SelectAll)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Ports.First().RegionIndex)

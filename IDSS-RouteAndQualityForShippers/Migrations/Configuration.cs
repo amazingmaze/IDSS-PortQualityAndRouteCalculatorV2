@@ -47,21 +47,24 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
 
         private static void SeedPorts(ApplicationDbContext context)
         {
+            // Get the selected ports from the ports.txt file in App_Data
+            var lines = File.ReadAllLines(MapPath("~/App_Data/ports.txt")); ;
+
+
             // Load XML document
-
-            var count = 0;
-
             var doc = XDocument.Load(MapPath("~/App_Data/wpi.xml"));
 
             // For every entry in the XML document
             foreach (var xe in doc.Descendants("Wpi_x0020_Data"))
             {
-                if (count == 5000)
-                    break;
+                var name = xe.Descendants(XName.Get("Main_port_name")).First().Value;
+
+                if (!lines.Contains(name))
+                    continue;
 
                 var regionIndex = int.Parse(xe.Descendants(XName.Get("Region_index")).First().Value);
                 var country = xe.Descendants(XName.Get("Wpi_country_code")).First().Value;
-                var name = xe.Descendants(XName.Get("Main_port_name")).First().Value;
+
 
                 var harborSizeCode = xe.Descendants(XName.Get("Harbor_size_code")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Harbor_size_code")).First().Value : "U";
                 var shelter = xe.Descendants(XName.Get("Shelter_afforded_code")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Shelter_afforded_code")).First().Value : "U";
@@ -79,7 +82,6 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
                 port.SetPosition(latD, latM, latH, lonD, lonM, lonH);
                 context.Ports.AddOrUpdate(port);
 
-                count++;
 
             }
         }

@@ -8,6 +8,7 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
     public class PortListViewModel
     {
         public List<PortViewModel> Ports { get; set; }
+        public bool SelectAll { get; set; }
 
         public PortListViewModel()
         {
