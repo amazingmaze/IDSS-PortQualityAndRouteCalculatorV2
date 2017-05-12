@@ -22,3 +22,18 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+/* CUSTOM PAGE SETTINGS */
+
+
+.portlistings {
+    max-height: 700px;
+    overflow-x: scroll;
+    
+}
+
+.portData {
+    width: 10%;
+}
+

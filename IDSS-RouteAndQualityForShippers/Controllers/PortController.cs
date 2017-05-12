@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using IDSS_RouteAndQualityForShippers.Models;
 using IDSS_RouteAndQualityForShippers.Models.ViewModels;
+using Microsoft.Ajax.Utilities;
 
 namespace IDSS_RouteAndQualityForShippers.Controllers
 {
@@ -24,23 +25,30 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             return View(new PortSelectViewModel());
         }
 
-        [HttpPost]
-        public ActionResult List(PortSelectViewModel viewModel)
+        public ActionResult List()
         {
-            // Convert ship length
+            return View(new PortListViewModel());
+        }
 
-            // Type of lifts required
-
+        [HttpPost]
+        public ActionResult List(PortListViewModel viewModel)
+        {
             // Average speed 
 
-            // TODO: ADD PAGENATION & AND PROPER QUERIES 
-            var ports = _context.Ports.ToList();
-            //var ports = _context.Ports.
-            //    Where(p => p.Country == viewModel.Country.ToUpper()).
-            //    Where(p => p.MaxSizeVessel == viewModel.MaxSizeVessel.ToUpper());
+            // TODO: ADD PAGENATION & SORT 
+            // IF size is +152.4 get L else get M and L 
+            var ports = double.Parse(viewModel.MaxSizeVessel) < 152.4
+                ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M")
+                    .Where(p => p.Country == "SE")
+                    .OrderByDescending(p => p.QualityScore)
+                    .Take(Int32.Parse(viewModel.Limit))
+                : _context.Ports.Where(p => p.MaxSizeVessel == "L")
+                    .Where(p => p.Country == "SE")
+                    .OrderByDescending(p => p.QualityScore)
+                    .Take(Int32.Parse(viewModel.Limit));
 
-            var listOfPorts = new PortListViewModel();
-            foreach (var port in ports)
+
+            foreach (var port in ports.ToList())
             {
                 // Create a viewmodel so we're able to add IsSelected to each port.
                 var model = new PortViewModel
@@ -53,13 +61,31 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                     Longitude = port.Longitude,
                     RegionIndex = port.RegionIndex,
                     Shelter = port.Shelter,
-                    Id = port.Id
+                    Id = port.Id,
+                    Lift = port.Lift,
+                    Repair = port.Repair,
+                    DryDock = port.DryDock,
+                    GarbageDisposal = port.GarbageDisposal,
+                    PilotageAvailable = port.PilotageAvailable,
+                    GoodHoldingGround = port.GoodHoldingGround,
+                    TugsAssist = port.TugsAssist,
+                    MedicalFacilities = port.MedicalFacilities,
+                    QualityScore = port.QualityScore,
+                    ChannelDepth = port.ChannelDepth,
+                    DieselOil = port.DieselOil,
+                    FuelOil = port.FuelOil,
+                    Engine = port.Engine,
+                    Deck = port.Deck,
+                    Water = port.Water,
+                    ElecRepair = port.ElecRepair,
+                    Provisions = port.Provisions,
+                    NavigEquip = port.NavigEquip
                 };
 
-                listOfPorts.Ports.Add(model);
+                viewModel.Ports.Add(model);
             }
 
-            return View(listOfPorts);
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -76,6 +102,18 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                     loc.Add(item.Longitude);
                     loc.Add(item.Latitude);
                     loc.Add(item.Name);
+                    loc.Add(item.QualityScore.ToString());
+                    loc.Add(item.Provisions);
+                    loc.Add(item.Water);
+                    loc.Add(item.FuelOil);
+                    loc.Add(item.DieselOil);
+                    loc.Add(item.Engine);
+                    loc.Add(item.Deck);
+                    loc.Add(item.MedicalFacilities);
+                    loc.Add(item.GarbageDisposal);
+
+
+
                     locations.Add(loc);
                 }
             }
@@ -89,12 +127,19 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                         loc.Add(item.Longitude);
                         loc.Add(item.Latitude);
                         loc.Add(item.Name);
+                        loc.Add(item.QualityScore.ToString());
+                        loc.Add(item.Provisions);
+                        loc.Add(item.Water);
+                        loc.Add(item.FuelOil);
+                        loc.Add(item.DieselOil);
+                        loc.Add(item.Engine);
+                        loc.Add(item.Deck);
+                        loc.Add(item.MedicalFacilities);
+                        loc.Add(item.GarbageDisposal);
                         locations.Add(loc);
                     }
                 }
             }
-
-
 
 
             Debug.WriteLine("Number of locations: " + locations.Count);

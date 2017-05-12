@@ -207,6 +207,14 @@
     <Compile Include="Migrations\201705100926526_changed lat long.Designer.cs">
       <DependentUpon>201705100926526_changed lat long.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705121147066_Added rest of params for Quality.cs" />
+    <Compile Include="Migrations\201705121147066_Added rest of params for Quality.Designer.cs">
+      <DependentUpon>201705121147066_Added rest of params for Quality.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201705121233045_added supplies parameters.cs" />
+    <Compile Include="Migrations\201705121233045_added supplies parameters.Designer.cs">
+      <DependentUpon>201705121233045_added supplies parameters.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -308,6 +316,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705100926526_changed lat long.resx">
       <DependentUpon>201705100926526_changed lat long.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121147066_Added rest of params for Quality.resx">
+      <DependentUpon>201705121147066_Added rest of params for Quality.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705121233045_added supplies parameters.resx">
+      <DependentUpon>201705121233045_added supplies parameters.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

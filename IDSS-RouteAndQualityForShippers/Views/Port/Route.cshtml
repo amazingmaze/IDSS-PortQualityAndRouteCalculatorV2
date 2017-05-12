@@ -5,56 +5,216 @@
 
 <head>
     <link rel="stylesheet" href="https://openlayers.org/en/v4.1.1/css/ol.css" type="text/css">
+
+    <script src="https://openlayers.org/en/v4.1.1/build/ol.js" type="text/javascript"></script>
+    <title>OpenLayers example</title>
+    
     <style>
         .map {
             height: 600px;
             width: 100%;
         }
+
+        .rankedList {
+            height: 600px;
+            width: 100%;
+        }
+
+        .icon {
+            height: 25px;
+            width: 25Px;
+        }
+        table {
+            table-layout: fixed;
+        }
+        td {
+            width: 100px;
+            white-space: nowrap;
+        }
+
     </style>
-    <script src="https://openlayers.org/en/v4.1.1/build/ol.js" type="text/javascript"></script>
-    <title>OpenLayers example</title>
 </head>
 <body>
-    <h2>Route</h2>
-    <div id="map" class="map"></div>
+    
+<div class="container">
+    <br/>
+    <div class="row">
+        <div>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Quality</th>
+                    <th>Supplies</th>
+                    <th>Services</th>
+                </tr>
+                <tr>  
+                    <td class="portName portData">Select a port</td>
+                    <td class="portQuality portData">Quality</td>
+                    <td>
+                        <img class="icon provisions" src="~/Content/icons/chicken-leg.png"/>
+                        <img class="icon water" src="~/Content/icons/faucet.png"/>
+                        <img class="icon fuelOil" src="~/Content/icons/barrels.png"/>
+                        <img class="icon fuelDiesel" src="~/Content/icons/gas-station.png"/>
+                        <img class="icon engine" src="~/Content/icons/gear.png"/>
+                        <img class="icon deck" src="~/Content/icons/ship.png"/>
+                    </td>
+                    <td>
+                        <img class="icon medical" src="~/Content/icons/medical.png"/>
+                        <img class="icon garbage" src="~/Content/icons/recycle-bin.png"/>
+                    </td>
+
+                </tr>
+
+            </table>
+            
+            
+        </div>
+        
+    </div>
+    <br/>
+    <div class="row">
+        
+        <div class="col-sm-10">
+            <div id="map" class="map"></div>
+        </div>
+        <div class="col-sm-2">
+            <div class="rankedList"> The proposed route </div>
+        </div>
+        
+    </div>
+
+    <div class="row">
+        <div class="col-sm-3 pull-left">
+            Fuel Consumption:
+        </div>
+        
+        <div class="col-sm-5 pull-right">
+            Total Distance:
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
 
-    
+    // TODO: Look into why this won't work on the laptop.
+
     //http://jsfiddle.net/6RS2z/356/
 
     var vectorSource = new ol.source.Vector({
       //create empty vector
     });
 
+    var stroke = new ol.style.Stroke({
+        color: '#990000',
+        width: 1.25
+    });
+    var styles = [
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(128,0,0,0.8)'
+                }),
+                radius: 5
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(128,0,0,0.8)'
+            }),
+            stroke: stroke
+        }),
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,51,0,0.8)'
+                }),
+                radius: 5
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(255,51,0,0.8)'
+            }),
+            stroke: stroke
+        }),
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,102,0,0.8)'
+                }),
+                radius: 5
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(255,102,0,0.8))'
+            }),
+            stroke: stroke
+        }),
+        new ol.style.Style({
+            image: new ol.style.Circle({
+                fill: new ol.style.Fill({
+                    color: 'rgba(255,204,102,1)'
+                }),
+                radius: 5
+            }),
+            fill: new ol.style.Fill({
+                color: 'rgba(255,204,102,1)'
+            }),
+            stroke: stroke
+        })
+
+    ];
 
     @foreach (var item in Model)
     {
         <text>
-        var iconFeature = new ol.Feature({
-            geometry: new
-                ol.geom.Point(ol.proj.transform([@item[0], @item[1]], 'EPSG:4326', 'EPSG:3857')),
-            name: '@item[2]'
+            var iconFeature = new ol.Feature({
+                geometry: new
+                    ol.geom.Point(ol.proj.transform([@item[0], @item[1]], 'EPSG:4326', 'EPSG:3857')),
+                name: '@item[2]',
+                quality: '@item[3]',
+                provisions: '@item[4]',
+                water: '@item[5]',
+                fuelOil: '@item[6]',
+                fuelDiesel: '@item[7]',
+                engine: '@item[8]',
+                deck: '@item[9]',
+                medical: '@item[10]',
+                garbage: '@item[11]'
+
         });
+
+        var quality = iconFeature.get('quality');
+        if (quality > 70) {
+            iconFeature.setStyle(styles[0]);
+        } else if (quality > 60) {
+            iconFeature.setStyle(styles[1]);
+        }else if (quality >= 40) {
+            iconFeature.setStyle(styles[2]);
+        }else if (quality < 40) {
+            iconFeature.setStyle(styles[3]);
+        }
         vectorSource.addFeature(iconFeature);
 
         </text>
     }
 
-    var iconStyle = new ol.style.Style({
-        image: new ol.style.Icon(({
-            anchor: [0.5, 0.5],
-            anchorXUnits: 'fraction',
-            anchorYUnits: 'fraction',
-            opacity: 0.75,
-            //src: 'http://openlayers.org/en/v3.9.0/examples/data/icon.png'
-            src: '/Content/sea_port.png'
-        }))
-    });
-   
+    
+
+
+
+    //var iconStyle = new ol.style.Style({
+    //    image: new ol.style.Icon(({
+    //        anchor: [0.5, 0.5],
+    //        anchorXUnits: 'fraction',
+    //        anchorYUnits: 'fraction',
+    //        opacity: 0.75,
+    //        //src: 'http://openlayers.org/en/v3.9.0/examples/data/icon.png'
+    //        src: '/Content/sea_port.png'
+    //    }))
+    //});
+
     //add the feature vector to the layer vector, and apply a style to whole layer
     var vectorLayer = new ol.layer.Vector({
       source: vectorSource,
-      style: iconStyle
+      style: styles
     });
 
     var map = new ol.Map({
@@ -65,6 +225,61 @@
         zoom: 2
       })
     });
+
+    
+
+        
+    map.on("click", function (e) {
+    map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
+
+        $("td.portName").text(feature.get('name'));
+        $("td.portQuality").text(feature.get('quality'));
+        if (feature.get('provisions') === "Y") {
+            $("img.provisions").show();
+        } else {
+            $("img.provisions").hide();
+        }
+        if (feature.get('water') === "Y") {
+            $("img.water").show();
+        } else {
+            $("img.water").hide();
+        }
+        if (feature.get('fuelOil') === "Y") {
+            $("img.fuelOil").show();
+        } else {
+            $("img.fuelOil").hide();
+        }
+        if (feature.get('fuelDiesel') === "Y") {
+            $("img.fuelDiesel").show();
+        } else {
+            $("img.fuelDiesel").hide();
+        }
+        if (feature.get('engine') === "Y") {
+            $("img.engine").show();
+        } else {
+            $("img.engine").hide();
+        }
+        if (feature.get('deck') === "Y") {
+            $("img.deck").show();
+        } else {
+            $("img.deck").hide();
+        }
+        if (feature.get('medical') === "Y") {
+            $("img.medical").show();
+        } else {
+            $("img.medical").hide();
+        }
+        if (feature.get('garbage') === "Y") {
+            $("img.garbage").show();
+        } else {
+            $("img.garbage").hide();
+        }
+
+    });
+    });
+
+
+
 
 
 </script>

@@ -17,16 +17,16 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("World Ports - route calculator", "List", "Port", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
                 <li>@Html.ActionLink("About", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li>@Html.ActionLink("Ports", "Index", "Port")</li>
+                <li>@Html.ActionLink("Ports", "List", "Port")</li>
             </ul>
-            @Html.Partial("_LoginPartial")
+            @*@Html.Partial("_LoginPartial")*@
         </div>
     </div>
 </div>
@@ -35,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - World Ports - Route calculator</p>
         </footer>
     </div>
 

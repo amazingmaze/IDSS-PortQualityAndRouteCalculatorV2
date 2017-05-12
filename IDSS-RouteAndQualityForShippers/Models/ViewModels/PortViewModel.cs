@@ -23,6 +23,37 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 
         public string MaxSizeVessel { get; set; }
 
+        public string ChannelDepth { get; set; }
+
+        public string GoodHoldingGround { get; set; }
+
+        public string PilotageAvailable { get; set; }
+
+        public string TugsAssist { get; set; }
+
+        public string MedicalFacilities { get; set; }
+
+        public string GarbageDisposal { get; set; }
+
+        public string Lift { get; set; }
+
+        public string Repair { get; set; }
+
+        public string DryDock { get; set; }
+
+        public string Provisions { get; set; }
+        public string Water { get; set; }
+        public string FuelOil { get; set; }
+        public string DieselOil { get; set; }
+        public string Deck { get; set; }
+        public string Engine { get; set; }
+
+        public string ElecRepair { get; set; }
+        public string NavigEquip { get; set; }
+
+
+        public double QualityScore { get; set; }
+
         public bool IsSelected { get; set; }
     }
 }
