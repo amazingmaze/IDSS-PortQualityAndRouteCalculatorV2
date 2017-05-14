@@ -26,14 +26,39 @@ textarea {
 
 /* CUSTOM PAGE SETTINGS */
 
+#portlist {
+    display: none;
+}
 
 .portlistings {
     max-height: 700px;
-    overflow-x: scroll;
-    
+    overflow: auto;    
 }
 
 .portData {
     width: 10%;
 }
 
+.map {
+    height: 600px;
+    width: 100%;
+}
+
+.rankedList {
+    height: 600px;
+    width: 100%;
+}
+
+.icon {
+    height: 25px;
+    width: 25Px;
+}
+
+.supplies-table {
+    table-layout: fixed;
+}
+
+.supplies-td {
+    width: 100px;
+    white-space: nowrap;
+}
