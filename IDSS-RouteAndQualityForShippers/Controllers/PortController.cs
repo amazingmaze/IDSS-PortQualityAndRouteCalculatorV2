@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
 using IDSS_RouteAndQualityForShippers.Models;
 using IDSS_RouteAndQualityForShippers.Models.ViewModels;
-using Microsoft.Ajax.Utilities;
 
 namespace IDSS_RouteAndQualityForShippers.Controllers
 {
@@ -20,11 +17,6 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index()
-        {
-            return View(new PortSelectViewModel());
-        }
-
         public ActionResult List()
         {
             return View(new PortListViewModel());
@@ -33,10 +25,6 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortListViewModel viewModel)
         {
-            // Average speed 
-
-            // TODO: ADD PAGENATION & SORT 
-            // IF size is +152.4 get L else get M and L 
             var ports = double.Parse(viewModel.MaxSizeVessel) < 152.4
                 ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M")
                     .OrderByDescending(p => p.QualityScore)
@@ -85,73 +73,6 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
 
             return View(viewModel);
         }
-
-        //[HttpPost]
-        //public ActionResult Route(PortListViewModel viewModel)
-        //{
-        //    // Get locations of each of the selected ports
-        //    var locations = new List<List<string>>();
-
-        //    if (viewModel.SelectAll)
-        //    {
-        //        foreach (var item in viewModel.Ports)
-        //        {
-        //            var loc = new List<string>();
-        //            loc.Add(item.Longitude);
-        //            loc.Add(item.Latitude);
-        //            loc.Add(item.Name);
-        //            loc.Add(item.QualityScore.ToString());
-        //            loc.Add(item.Provisions);
-        //            loc.Add(item.Water);
-        //            loc.Add(item.FuelOil);
-        //            loc.Add(item.DieselOil);
-        //            loc.Add(item.Engine);
-        //            loc.Add(item.Deck);
-        //            loc.Add(item.MedicalFacilities);
-        //            loc.Add(item.GarbageDisposal);
-
-
-
-        //            locations.Add(loc);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        foreach (var item in viewModel.Ports)
-        //        {
-        //            if (item.IsSelected)
-        //            {
-        //                var loc = new List<string>();
-        //                loc.Add(item.Longitude);
-        //                loc.Add(item.Latitude);
-        //                loc.Add(item.Name);
-        //                loc.Add(item.QualityScore.ToString());
-        //                loc.Add(item.Provisions);
-        //                loc.Add(item.Water);
-        //                loc.Add(item.FuelOil);
-        //                loc.Add(item.DieselOil);
-        //                loc.Add(item.Engine);
-        //                loc.Add(item.Deck);
-        //                loc.Add(item.MedicalFacilities);
-        //                loc.Add(item.GarbageDisposal);
-        //                locations.Add(loc);
-        //            }
-        //        }
-        //    }
-
-
-        //    Debug.WriteLine("Number of locations: " + locations.Count);
-
-        //    // Get real distances 
-        //    viewModel.Distance = "100000";
-
-        //    // Calculate route
-
-
-        //    // Calculate fuel costs
-        //    viewModel.CalculateFuelCost();
-        //    return View(locations);
-        //}
 
         [HttpPost]
         public ActionResult Route(PortListViewModel viewModel)

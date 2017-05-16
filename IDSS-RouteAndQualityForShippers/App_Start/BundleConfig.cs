@@ -31,7 +31,8 @@ namespace IDSS_RouteAndQualityForShippers
                       "~/Content/ol.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/ol").Include(
-                      "~/Scripts/ol.js"));
+                      "~/Scripts/ol.js",
+                      "~/Scripts/map.js"));
         }
     }
 }

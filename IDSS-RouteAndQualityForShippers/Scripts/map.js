@@ -1,4 +1,6 @@
-﻿//http://jsfiddle.net/6RS2z/356/
+﻿
+var createMap = function (model, map) {
+    //http://jsfiddle.net/6RS2z/356/
     var vectorSource = new ol.source.Vector({
         //create empty vector
     });
@@ -63,68 +65,40 @@
         if (quality > 70) {
             return styles[0];
         } else if (quality > 60) {
-            return styles[1];
-        } else if (quality >= 40) {
             return styles[2];
-        } else {
+        } else if (quality >= 40) {
             return styles[3];
+        } else {
+            return styles[4];
         }
     };
-
 
     var createFeature = function (item) {
         var iconFeature = new ol.Feature({
             geometry: new
-                ol.geom.Point(ol.proj.transform([item[0], item[1]], "EPSG:4326", "EPSG:3857")),
-            name: item[2],
-            quality: item[3],
-            provisions: 'item[4]',
-            water: 'item[5]',
-            fuelOil: 'item[6]',
-            fuelDiesel: 'item[7]',
-            engine: 'item[8]',
-            deck: 'item[9]',
-            medical: 'item[10]',
-            garbage: 'item[11]'
+                ol.geom.Point(ol.proj.transform([parseFloat(item.Longitude), parseFloat(item.Latitude)], "EPSG:4326", "EPSG:3857")),
+            name: item.Name,
+            quality: item.QualityScore,
+            provisions: item.Provisions,
+            water: item.Water,
+            fuelOil: item.FueOil,
+            fuelDiesel: item.DieselOil,
+            engine: item.Engine,
+            deck: item.Deck,
+            medical: item.Medical,
+            garbage: item.GarbageDisposal
 
         });
-        console.log("Long: " + item[0] + " Lat: " + item[1]);
         var quality = iconFeature.get('quality');
         iconFeature.setStyle(getStyle(quality));
-
         vectorSource.addFeature(iconFeature);
     };
 
-    //@foreach(var item in Model)
-    //{
-    //    <text>
-    //        var iconFeature = new ol.Feature({
-    //            geometry: new
-    //                            ol.geom.Point(ol.proj.transform([@item[0], @item[1]], 'EPSG:4326', 'EPSG:3857')),
-    //                        name: '@item[2]',
-    //                        quality: '@item[3]',
-    //                        provisions: '@item[4]',
-    //                        water: '@item[5]',
-    //                        fuelOil: '@item[6]',
-    //                        fuelDiesel: '@item[7]',
-    //                        engine: '@item[8]',
-    //                        deck: '@item[9]',
-    //                        medical: '@item[10]',
-    //                        garbage: '@item[11]'
-
-    //                    });
-
-    //                    var quality = iconFeature.get('quality');
-    //                    iconFeature.setStyle(getStyle(quality));
-
-    //                    vectorSource.addFeature(iconFeature);
-
-    //                </text>
-    //}
-
-
-
-    //add the feature vector to the layer vector, and apply a style to whole layer
+    var data = JSON.parse(model);
+    data.forEach(function (item) {
+        createFeature(item);
+    });
+    
     var vectorLayer = new ol.layer.Vector({
         source: vectorSource,
         style: styles
@@ -132,7 +106,7 @@
 
     var map = new ol.Map({
         layers: [new ol.layer.Tile({ source: new ol.source.OSM() }), vectorLayer],
-        target: document.getElementById('map'),
+        target: map,
         view: new ol.View({
             center: [0, 0],
             zoom: 2
@@ -140,7 +114,7 @@
     });
 
     map.on("click", function (e) {
-        map.forEachFeatureAtPixel(e.pixel, function (feature) {
+        map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
 
             $("td.portName").text(feature.get('name'));
             $("td.portQuality").text(feature.get('quality'));
@@ -188,3 +162,4 @@
         });
     });
 
+}

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.Globalization;
 
 namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 {
@@ -26,7 +25,7 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 
         [Display(Name = "Limit results to")]
         public string Limit { get; set; }
-
+        
         public string Distance { get; set; }
 
         public string FuelCost { get; set; }
@@ -42,7 +41,7 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         public void CalculateFuelCost()
         {
             FuelCost = Math.Floor(double.Parse(DieselPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
-                   double.Parse(DieselTonnePrice)).ToString();
+                   double.Parse(DieselTonnePrice)).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," });
         }
 
     }

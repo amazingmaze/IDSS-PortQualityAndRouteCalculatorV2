@@ -8,9 +8,7 @@
 
 @using (Html.BeginForm("List", "Port", FormMethod.Post))
 {
-
     <div class="jumbotron">
-        
         <table class="table">
             <tr>
                 <td>
@@ -32,15 +30,11 @@
                         @Html.TextBoxFor(m => m.DieselTonnePrice, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: $493.64 (2017-05-12)"})
                         @Html.LabelFor(m => m.AvgSpeed)
                         @Html.TextBoxFor(m => m.AvgSpeed, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: 24"})
-
-
-
                     </div>
                 </td>
                 <td>
                     <p>Limit search results</p>
                     <div class="form-group input-group-sm">
-                        @* TODO: CHANGE TO SELECT LIST*@
                         @Html.LabelFor(m => m.Limit)
                         @Html.TextBoxFor(model => model.Limit, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Limit)})
                     </div>
@@ -49,17 +43,11 @@
                     <div class="form-group input-group-sm">
                         <button type="submit" class="btn btn-default">Filter</button>
                     </div>
-
                 </td>
             </tr>
-
         </table>
     </div>
-
-    
 }
-
-
 
 @using (Html.BeginForm("Route", "Port", FormMethod.Post))
 
@@ -77,7 +65,6 @@
                         <th title="Quality score">
                             @Html.DisplayNameFor(model => model.Ports.First().QualityScore)
                         </th>
-
                         <th title="Name">
                             @Html.DisplayNameFor(model => model.Ports.First().Name)
                         </th>
@@ -145,13 +132,11 @@
                         <th title="Navigation equipment repair">
                             @Html.DisplayNameFor(model => model.Ports.First().NavigEquip)
                         </th>
-
                         <th></th>
                     </tr>
 
                     @for (var i = 0; i < Model.Ports.Count; i++)
                 {
-
                         <tr>
                             <td>
                                 @Html.CheckBoxFor(modelItem => Model.Ports[i].IsSelected, new { @class = "isSelected" })
@@ -168,8 +153,8 @@
                                 @Html.DisplayFor(modelItem => Model.Ports[i].Country)
                                 @Html.HiddenFor(modelItem => Model.Ports[i].Country)
                             </td>
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Latitude)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Longitude)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Latitude)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Longitude)
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Ports[i].HarborSizeCode)
                                 @Html.HiddenFor(modelItem => Model.Ports[i].HarborSizeCode)
@@ -211,7 +196,6 @@
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Ports[i].DryDock)
                             </td>
-
                             <td>
                                 @Html.DisplayFor(modelItem => Model.Ports[i].Provisions)
                                 @Html.HiddenFor(modelItem => Model.Ports[i].Provisions)
@@ -252,20 +236,13 @@
                     @Html.HiddenFor(modelItem => Model.DieselTonnePrice)
                     @Html.HiddenFor(modelItem => Model.PortOrigin)
                     @Html.HiddenFor(modelItem => Model.MaxSizeVessel)
-
-
                 </table>
-
             </div>
             <br />
-            
-
         </div>
-        
     </div>
     <p class="navbar-text">Calculate route and fuel cost</p>
     <button type="submit" class="btn btn-default navbar-btn">Calculate</button>
-
 }
 
 </div>
@@ -279,7 +256,6 @@
                 $('.isSelected').prop('checked', false);
             }
         }
-
         if ($('#maxSizeVesselInput').val().length !== 0) {
             $('#portlist').show();
         } 
