@@ -9,33 +9,54 @@
 @using (Html.BeginForm("List", "Port", FormMethod.Post))
 {
 
-    <table class="table">
-        <tr>
-            <td>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.MaxSizeVessel, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.MaxSizeVessel), id = "maxSizeVesselInput"})
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    @Html.TextBoxFor(model => model.FuelConsumption, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.FuelConsumption)})
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    @* TODO: CHANGE TO SELECT LIST*@
-                    @Html.TextBoxFor(model => model.Limit, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Limit)})
-                </div>
-            </td>
-            <td>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Filter</button>
-                </div>
+    <div class="jumbotron">
+        
+        <table class="table">
+            <tr>
+                <td>
+                    <p> Information required for route calculation</p>
+                    <div class="form-group input-group-sm">
+                        @Html.LabelFor(m => m.PortOrigin)
+                        @Html.TextBoxFor(m => m.PortOrigin, new {@class = "form-control", autofocus = "autofocus", placeholder = "eg. Goteborg"})
 
-            </td>
-        </tr>
+                        @Html.LabelFor(m => m.MaxSizeVessel)
+                        @Html.TextBoxFor(m => m.MaxSizeVessel, new {@class = "form-control", autofocus = "autofocus", id = "maxSizeVesselInput", placeholder = "eg. 155"})
+                    </div>
+                </td>
+                <td>
+                    <p> Information regarding fuel cost calculation</p>
+                    <div class="form-group input-group-sm">
+                        @Html.LabelFor(m => m.DieselPerHour)
+                        @Html.TextBoxFor(m => m.DieselPerHour, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: 16"})
+                        @Html.LabelFor(m => m.DieselTonnePrice)
+                        @Html.TextBoxFor(m => m.DieselTonnePrice, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: $493.64 (2017-05-12)"})
+                        @Html.LabelFor(m => m.AvgSpeed)
+                        @Html.TextBoxFor(m => m.AvgSpeed, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: 24"})
 
-    </table>
+
+
+                    </div>
+                </td>
+                <td>
+                    <p>Limit search results</p>
+                    <div class="form-group input-group-sm">
+                        @* TODO: CHANGE TO SELECT LIST*@
+                        @Html.LabelFor(m => m.Limit)
+                        @Html.TextBoxFor(model => model.Limit, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Limit)})
+                    </div>
+                </td>
+                <td>
+                    <div class="form-group input-group-sm">
+                        <button type="submit" class="btn btn-default">Filter</button>
+                    </div>
+
+                </td>
+            </tr>
+
+        </table>
+    </div>
+
+    
 }
 
 
@@ -43,194 +64,207 @@
 @using (Html.BeginForm("Route", "Port", FormMethod.Post))
 
 {
-    <div id="portlist">
-        <div class="portlistings">
-            <table class="table">
-                <tr>
-                    <th>
-                        @Html.CheckBoxFor(modelItem => Model.SelectAll, new {@class = "selectAll", onclick = "CheckAll()"})
-                        @Html.HiddenFor(modelItem => Model.SelectAll)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().QualityScore)
-                    </th>
+    <div class="panel panel-default">
+        <div class="panel-heading">Ports</div>
+        <div id="portlist">
+            <div class="portlistings">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.CheckBoxFor(modelItem => Model.SelectAll, new { @class = "selectAll", onclick = "CheckAll()" })
+                            @Html.HiddenFor(modelItem => Model.SelectAll)
+                        </th>
+                        <th title="Quality score">
+                            @Html.DisplayNameFor(model => model.Ports.First().QualityScore)
+                        </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Name)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Country)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().HarborSizeCode)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Shelter)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().MaxSizeVessel)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().ChannelDepth)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().GoodHoldingGround)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().PilotageAvailable)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().TugsAssist)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().MedicalFacilities)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().GarbageDisposal)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Lift)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Repair)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().DryDock)
-                    </th>
+                        <th title="Name">
+                            @Html.DisplayNameFor(model => model.Ports.First().Name)
+                        </th>
+                        <th title="Country">
+                            @Html.DisplayNameFor(model => model.Ports.First().Country)
+                        </th>
+                        <th title="Harbor size, (L)arge or (M)edium">
+                            @Html.DisplayNameFor(model => model.Ports.First().HarborSizeCode)
+                        </th>
+                        <th title="Shelter, (E)xcellent, (G)ood, (F)air, (P)oor, (N)one, (U)nknown">
+                            @Html.DisplayNameFor(model => model.Ports.First().Shelter)
+                        </th>
+                        <th title="Max vessel size (L)arge, (M)edium">
+                            @Html.DisplayNameFor(model => model.Ports.First().MaxSizeVessel)
+                        </th>
+                        <th title="Channel depth, A = +23.2m, B/C/D = 18.2-23.1m, E/F/G/H = 12.3-18.2m, J-Q = 0-12.2m">
+                            @Html.DisplayNameFor(model => model.Ports.First().ChannelDepth)
+                        </th>
+                        <th title="Good holding ground">
+                            @Html.DisplayNameFor(model => model.Ports.First().GoodHoldingGround)
+                        </th>
+                        <th title="Pilotage available">
+                            @Html.DisplayNameFor(model => model.Ports.First().PilotageAvailable)
+                        </th>
+                        <th title="Tugs available">
+                            @Html.DisplayNameFor(model => model.Ports.First().TugsAssist)
+                        </th>
+                        <th title="Medical facilities">
+                            @Html.DisplayNameFor(model => model.Ports.First().MedicalFacilities)
+                        </th>
+                        <th title="Garbage disposal">
+                            @Html.DisplayNameFor(model => model.Ports.First().GarbageDisposal)
+                        </th>
+                        <th title="Lift">
+                            @Html.DisplayNameFor(model => model.Ports.First().Lift)
+                        </th>
+                        <th title="Repair">
+                            @Html.DisplayNameFor(model => model.Ports.First().Repair)
+                        </th>
+                        <th title="Dry dock size">
+                            @Html.DisplayNameFor(model => model.Ports.First().DryDock)
+                        </th>
 
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Provisions)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Water)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().FuelOil)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().DieselOil)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Deck)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().Engine)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().ElecRepair)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Ports.First().NavigEquip)
-                    </th>
+                        <th title="Provisions (Food)">
+                            @Html.DisplayNameFor(model => model.Ports.First().Provisions)
+                        </th>
+                        <th title="Water">
+                            @Html.DisplayNameFor(model => model.Ports.First().Water)
+                        </th>
+                        <th title="Oil">
+                            @Html.DisplayNameFor(model => model.Ports.First().FuelOil)
+                        </th>
+                        <th title="Diesel">
+                            @Html.DisplayNameFor(model => model.Ports.First().DieselOil)
+                        </th>
+                        <th title="Deck">
+                            @Html.DisplayNameFor(model => model.Ports.First().Deck)
+                        </th>
+                        <th title="Engine">
+                            @Html.DisplayNameFor(model => model.Ports.First().Engine)
+                        </th>
+                        <th title="Electronic repair">
+                            @Html.DisplayNameFor(model => model.Ports.First().ElecRepair)
+                        </th>
+                        <th title="Navigation equipment repair">
+                            @Html.DisplayNameFor(model => model.Ports.First().NavigEquip)
+                        </th>
 
-                    <th></th>
-                </tr>
+                        <th></th>
+                    </tr>
 
-                @for (var i = 0; i < Model.Ports.Count; i++)
+                    @for (var i = 0; i < Model.Ports.Count; i++)
                 {
 
-                    <tr>
-                        <td>
-                            @Html.CheckBoxFor(modelItem => Model.Ports[i].IsSelected, new {@class = "isSelected"})
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].QualityScore)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].QualityScore)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Name)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Name)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Country)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Country)
-                        </td>
-                        @Html.HiddenFor(modelItem => Model.Ports[i].Latitude)
-                        @Html.HiddenFor(modelItem => Model.Ports[i].Longitude)
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].HarborSizeCode)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].HarborSizeCode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Shelter)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Shelter)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].MaxSizeVessel)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].MaxSizeVessel)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].ChannelDepth)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].GoodHoldingGround)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].PilotageAvailable)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].TugsAssist)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].MedicalFacilities)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].MedicalFacilities)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].GarbageDisposal)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].GarbageDisposal)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Lift)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Repair)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].DryDock)
-                        </td>
+                        <tr>
+                            <td>
+                                @Html.CheckBoxFor(modelItem => Model.Ports[i].IsSelected, new { @class = "isSelected" })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].QualityScore)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].QualityScore)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Name)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Country)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Country)
+                            </td>
+                            @Html.HiddenFor(modelItem => Model.Ports[i].Latitude)
+                            @Html.HiddenFor(modelItem => Model.Ports[i].Longitude)
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].HarborSizeCode)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].HarborSizeCode)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Shelter)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Shelter)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].MaxSizeVessel)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].MaxSizeVessel)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].ChannelDepth)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].GoodHoldingGround)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].PilotageAvailable)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].TugsAssist)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].MedicalFacilities)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].MedicalFacilities)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].GarbageDisposal)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].GarbageDisposal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Lift)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Repair)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].DryDock)
+                            </td>
 
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Provisions)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Provisions)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Water)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Water)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].FuelOil)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].FuelOil)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].DieselOil)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].DieselOil)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Deck)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Deck)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].Engine)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].Engine)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].ElecRepair)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].ElecRepair)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => Model.Ports[i].NavigEquip)
-                            @Html.HiddenFor(modelItem => Model.Ports[i].NavigEquip)
-                        </td>
-                    </tr>
-                }
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Provisions)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Provisions)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Water)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Water)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].FuelOil)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].FuelOil)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].DieselOil)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].DieselOil)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Deck)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Deck)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].Engine)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].Engine)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].ElecRepair)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].ElecRepair)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].NavigEquip)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].NavigEquip)
+                            </td>
+                        </tr>
+                    }
+
+                    @Html.HiddenFor(modelItem => Model.AvgSpeed)
+                    @Html.HiddenFor(modelItem => Model.DieselPerHour)
+                    @Html.HiddenFor(modelItem => Model.DieselTonnePrice)
+                    @Html.HiddenFor(modelItem => Model.PortOrigin)
+                    @Html.HiddenFor(modelItem => Model.MaxSizeVessel)
 
 
-            </table>
+                </table>
+
+            </div>
+            <br />
+            
 
         </div>
-        <p>Calculate route and fuel cost</p>
-        <button type="submit" class="btn btn-default">Calculate</button>
+        
     </div>
+    <p class="navbar-text">Calculate route and fuel cost</p>
+    <button type="submit" class="btn btn-default navbar-btn">Calculate</button>
 
 }
 

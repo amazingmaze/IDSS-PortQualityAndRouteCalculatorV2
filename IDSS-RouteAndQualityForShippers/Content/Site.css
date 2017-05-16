@@ -1,4 +1,15 @@
-﻿body {
+﻿@media (min-width: 1200px) {
+    .container {
+        max-width: 100%;
+        width: auto;
+    }
+}
+
+.jumbotron {
+    height: 300px;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -55,10 +66,15 @@ textarea {
 }
 
 .supplies-table {
-    table-layout: fixed;
+    table-layout: auto;
 }
 
 .supplies-td {
-    width: 100px;
+    width: 50px;
     white-space: nowrap;
+}
+
+
+.panel {
+    padding-bottom: 20px;
 }

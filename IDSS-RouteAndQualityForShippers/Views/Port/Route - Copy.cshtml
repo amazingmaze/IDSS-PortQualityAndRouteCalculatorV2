@@ -1,4 +1,4 @@
-﻿@model IDSS_RouteAndQualityForShippers.Models.ViewModels.PortListViewModel
+﻿@model List<List<string>>
 @{
     ViewBag.Title = "Route";
 }
@@ -8,59 +8,59 @@
 </head>
 
     
-<div class="container panel panel-default">
+<div class="container">
     <div class="row">
-        
-        <div class="col-sm-12">
-                <table class="table supplies-table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Quality</th>
-                        <th>Supplies</th>
-                        <th>Services</th>
-                    </tr>
-                    <tr>
-                        <td class="portName portData" title="Port name">Select a port</td>
-                        <td class="portQuality portData" title="Quality score"></td>
-                        <td class="supplies-td">
-                            <img class="icon provisions" style="display: none" title="Provisions" src="~/Content/icons/chicken-leg.png" />
-                            <img class="icon water" style="display: none" title="Water" src="~/Content/icons/faucet.png" />
-                            <img class="icon fuelOil" style="display: none" title="Fuel Oil" src="~/Content/icons/barrels.png" />
-                            <img class="icon fuelDiesel" style="display: none" title="Fuel Diesel" src="~/Content/icons/gas-station.png" />
-                            <img class="icon engine" style="display: none" title="Engine" src="~/Content/icons/gear.png" />
-                            <img class="icon deck" style="display: none" title="Deck" src="~/Content/icons/ship.png" />
-                        </td>
-                        <td>
-                            <img class="icon medical" style="display: none" title="Medical" src="~/Content/icons/medical.png" />
-                            <img class="icon garbage" style="display: none" title="Garbage disposal" src="~/Content/icons/recycle-bin.png" />
-                        </td>
+        <div>
+            <table class="table supplies-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Quality</th>
+                    <th>Supplies</th>
+                    <th>Services</th>
+                </tr>
+                <tr>  
+                    <td class="portName portData" title="Port name">Select a port</td>
+                    <td class="portQuality portData" title="Quality score"></td>
+                    <td class="supplies-td">
+                        <img class="icon provisions" style="display: none" title="Provisions" src="~/Content/icons/chicken-leg.png"/>
+                        <img class="icon water" style="display: none" title="Water" src="~/Content/icons/faucet.png"/>
+                        <img class="icon fuelOil" style="display: none" title="Fuel Oil" src="~/Content/icons/barrels.png"/>
+                        <img class="icon fuelDiesel" style="display: none" title="Fuel Diesel" src="~/Content/icons/gas-station.png"/>
+                        <img class="icon engine" style="display: none" title="Engine" src="~/Content/icons/gear.png"/>
+                        <img class="icon deck" style="display: none" title="Deck" src="~/Content/icons/ship.png"/>
+                    </td>
+                    <td>
+                        <img class="icon medical" style="display: none" title="Medical" src="~/Content/icons/medical.png"/>
+                        <img class="icon garbage" style="display: none" title="Garbage disposal" src="~/Content/icons/recycle-bin.png"/>
+                    </td>
 
-                    </tr>
+                </tr>
 
-                </table>
+            </table>
+            
+            
         </div>
         
-
     </div>
     <br/>
     <div class="row">
         
-        <div class="col-sm-5">
+        <div class="col-sm-10">
             <div id="map" class="map"></div>
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-2">
             <div class="rankedList"> The proposed route </div>
         </div>
         
     </div>
     <br/>
     <div class="row">
-        <div class="col-sm-4 pull-left">
-            <b>Fuel Consumption Cost:</b> $@Model.FuelCost
+        <div class="col-sm-3 pull-left">
+            <b>Fuel Consumption:</b>
         </div>
         
-        <div class="col-sm-8">
-            <b>Total Distance:</b> @Model.Distance
+        <div class="col-sm-5 pull-right">
+            <b>Total Distance:</b>
         </div>
     </div>
 </div>
@@ -170,22 +170,22 @@
             vectorSource.addFeature(iconFeature);
         };
 
-        @foreach (var item in Model.Ports)
+        @foreach (var item in Model)
             {
                 <text>
                     var iconFeature = new ol.Feature({
                         geometry: new
-                            ol.geom.Point(ol.proj.transform([@item.Longitude, @item.Latitude], 'EPSG:4326', 'EPSG:3857')),
-                        name: '@item.Name',
-                        quality: '@item.QualityScore',
-                        provisions: '@item.Provisions',
-                        water: '@item.Water',
-                        fuelOil: '@item.FuelOil',
-                        fuelDiesel: '@item.DieselOil',
-                        engine: '@item.Engine',
-                        deck: '@item.Deck',
-                        medical: '@item.MedicalFacilities',
-                        garbage: '@item.GarbageDisposal'
+                            ol.geom.Point(ol.proj.transform([@item[0], @item[1]], 'EPSG:4326', 'EPSG:3857')),
+                        name: '@item[2]',
+                        quality: '@item[3]',
+                        provisions: '@item[4]',
+                        water: '@item[5]',
+                        fuelOil: '@item[6]',
+                        fuelDiesel: '@item[7]',
+                        engine: '@item[8]',
+                        deck: '@item[9]',
+                        medical: '@item[10]',
+                        garbage: '@item[11]'
 
                     });
 

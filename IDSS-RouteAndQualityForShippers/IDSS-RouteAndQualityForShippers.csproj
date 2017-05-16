@@ -228,6 +228,12 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-IDSS-RouteAndQualityForShippers-20170509093547.mdf" />
+    <Content Include="App_Data\aspnet-IDSS-RouteAndQualityForShippers-20170509093547_log.ldf">
+      <DependentUpon>aspnet-IDSS-RouteAndQualityForShippers-20170509093547.mdf</DependentUpon>
+    </Content>
+    <Content Include="App_Data\ports.txt" />
+    <Content Include="App_Data\wpi.xml" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.v3.css" />
@@ -259,6 +265,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\map.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\ol.js" />
     <Content Include="Scripts\respond.js" />
@@ -300,10 +307,9 @@
     <Content Include="Views\Port\List.cshtml" />
     <Content Include="Views\Port\Index.cshtml" />
     <Content Include="Views\Port\Route.cshtml" />
+    <Content Include="Views\Port\Route - Copy.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

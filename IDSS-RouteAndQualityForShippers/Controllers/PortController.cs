@@ -39,11 +39,9 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             // IF size is +152.4 get L else get M and L 
             var ports = double.Parse(viewModel.MaxSizeVessel) < 152.4
                 ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M")
-                    .Where(p => p.Country == "SE")
                     .OrderByDescending(p => p.QualityScore)
                     .Take(Int32.Parse(viewModel.Limit))
                 : _context.Ports.Where(p => p.MaxSizeVessel == "L")
-                    .Where(p => p.Country == "SE")
                     .OrderByDescending(p => p.QualityScore)
                     .Take(Int32.Parse(viewModel.Limit));
 
@@ -88,72 +86,87 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             return View(viewModel);
         }
 
+        //[HttpPost]
+        //public ActionResult Route(PortListViewModel viewModel)
+        //{
+        //    // Get locations of each of the selected ports
+        //    var locations = new List<List<string>>();
+
+        //    if (viewModel.SelectAll)
+        //    {
+        //        foreach (var item in viewModel.Ports)
+        //        {
+        //            var loc = new List<string>();
+        //            loc.Add(item.Longitude);
+        //            loc.Add(item.Latitude);
+        //            loc.Add(item.Name);
+        //            loc.Add(item.QualityScore.ToString());
+        //            loc.Add(item.Provisions);
+        //            loc.Add(item.Water);
+        //            loc.Add(item.FuelOil);
+        //            loc.Add(item.DieselOil);
+        //            loc.Add(item.Engine);
+        //            loc.Add(item.Deck);
+        //            loc.Add(item.MedicalFacilities);
+        //            loc.Add(item.GarbageDisposal);
+
+
+
+        //            locations.Add(loc);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        foreach (var item in viewModel.Ports)
+        //        {
+        //            if (item.IsSelected)
+        //            {
+        //                var loc = new List<string>();
+        //                loc.Add(item.Longitude);
+        //                loc.Add(item.Latitude);
+        //                loc.Add(item.Name);
+        //                loc.Add(item.QualityScore.ToString());
+        //                loc.Add(item.Provisions);
+        //                loc.Add(item.Water);
+        //                loc.Add(item.FuelOil);
+        //                loc.Add(item.DieselOil);
+        //                loc.Add(item.Engine);
+        //                loc.Add(item.Deck);
+        //                loc.Add(item.MedicalFacilities);
+        //                loc.Add(item.GarbageDisposal);
+        //                locations.Add(loc);
+        //            }
+        //        }
+        //    }
+
+
+        //    Debug.WriteLine("Number of locations: " + locations.Count);
+
+        //    // Get real distances 
+        //    viewModel.Distance = "100000";
+
+        //    // Calculate route
+
+
+        //    // Calculate fuel costs
+        //    viewModel.CalculateFuelCost();
+        //    return View(locations);
+        //}
+
         [HttpPost]
         public ActionResult Route(PortListViewModel viewModel)
         {
-            // Get locations of each of the selected ports
-            var locations = new List<List<string>>();
+            // Get distances
 
-            if (viewModel.SelectAll)
-            {
-                foreach (var item in viewModel.Ports)
-                {
-                    var loc = new List<string>();
-                    loc.Add(item.Longitude);
-                    loc.Add(item.Latitude);
-                    loc.Add(item.Name);
-                    loc.Add(item.QualityScore.ToString());
-                    loc.Add(item.Provisions);
-                    loc.Add(item.Water);
-                    loc.Add(item.FuelOil);
-                    loc.Add(item.DieselOil);
-                    loc.Add(item.Engine);
-                    loc.Add(item.Deck);
-                    loc.Add(item.MedicalFacilities);
-                    loc.Add(item.GarbageDisposal);
+            // Calculate Route
 
+            // Set distance
+            viewModel.Distance = "153";
 
+            // Calculate fuel cost
+            viewModel.CalculateFuelCost();
 
-                    locations.Add(loc);
-                }
-            }
-            else
-            {
-                foreach (var item in viewModel.Ports)
-                {
-                    if (item.IsSelected)
-                    {
-                        var loc = new List<string>();
-                        loc.Add(item.Longitude);
-                        loc.Add(item.Latitude);
-                        loc.Add(item.Name);
-                        loc.Add(item.QualityScore.ToString());
-                        loc.Add(item.Provisions);
-                        loc.Add(item.Water);
-                        loc.Add(item.FuelOil);
-                        loc.Add(item.DieselOil);
-                        loc.Add(item.Engine);
-                        loc.Add(item.Deck);
-                        loc.Add(item.MedicalFacilities);
-                        loc.Add(item.GarbageDisposal);
-                        locations.Add(loc);
-                    }
-                }
-            }
-
-
-            Debug.WriteLine("Number of locations: " + locations.Count);
-
-            // Get real distances 
-
-            // Calculate fuel costs
-
-            // Calculate route
-
-            // Return a view with the map and added waypoints
-            // TODO: Create a google map with waypoints
-
-            return View(locations);
+            return View(viewModel);
         }
     }
 }
