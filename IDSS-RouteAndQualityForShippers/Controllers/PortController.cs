@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using IDSS_RouteAndQualityForShippers.Models;
 using IDSS_RouteAndQualityForShippers.Models.ViewModels;
+using IDSS_RouteAndQualityForShippers.Services.Route;
 
 namespace IDSS_RouteAndQualityForShippers.Controllers
 {
@@ -19,7 +20,9 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
 
         public ActionResult List()
         {
-            return View(new PortListViewModel());
+            var portNames = _context.Ports.Select(p => p.Name).ToList();
+
+            return View(new PortListViewModel { PortNames = portNames });
         }
 
         [HttpPost]
@@ -77,12 +80,34 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult Route(PortListViewModel viewModel)
         {
-            // Get distances
 
             // Calculate Route
+            var routeCalculator = new Program();
+
+            var waypoints = new List<string>();
+            //var source = "REYKJAVIK";
+            //waypoints.Add("OSAKA");
+            //waypoints.Add("GEORGETOWN");
+            //waypoints.Add("BORDEAUX");
+            //waypoints.Add("AHUS");
+            //waypoints.Add("REYKJAVIK");
+
+            foreach (var port in viewModel.Ports)
+            {
+                waypoints.Add(port.Name);
+            }
+
+
+            var source = viewModel.PortOrigin;
+
+            Double distance = 0;
+            var calculatedRoute = routeCalculator.main(waypoints, source, out distance);
 
             // Set distance
-            viewModel.Distance = "153";
+            viewModel.Distance = distance.ToString();
+
+            // Calculated Route
+            viewModel.Route = calculatedRoute;
 
             // Calculate fuel cost
             viewModel.CalculateFuelCost();

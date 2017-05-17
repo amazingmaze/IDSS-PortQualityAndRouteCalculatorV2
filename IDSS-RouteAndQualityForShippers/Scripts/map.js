@@ -81,11 +81,11 @@ var createMap = function (model, map) {
             quality: item.QualityScore,
             provisions: item.Provisions,
             water: item.Water,
-            fuelOil: item.FueOil,
+            fuelOil: item.FuelOil,
             fuelDiesel: item.DieselOil,
             engine: item.Engine,
             deck: item.Deck,
-            medical: item.Medical,
+            medical: item.MedicalFacilities,
             garbage: item.GarbageDisposal
 
         });

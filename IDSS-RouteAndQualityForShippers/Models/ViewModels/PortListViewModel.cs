@@ -7,7 +7,7 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 {
     public class PortListViewModel
     {
-        [Display(Name = "Port origin")]
+        [Display(Name = "Port of origin")]
         public string PortOrigin { get; set; }
 
         [Display(Name = "Size of vessel (in meters)")]
@@ -25,13 +25,17 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 
         [Display(Name = "Limit results to")]
         public string Limit { get; set; }
-        
+
         public string Distance { get; set; }
 
         public string FuelCost { get; set; }
 
+        public List<string> PortNames { get; set; }
+
         public List<PortViewModel> Ports { get; set; }
         public bool SelectAll { get; set; }
+
+        public List<string> Route { get; set; }
 
         public PortListViewModel()
         {

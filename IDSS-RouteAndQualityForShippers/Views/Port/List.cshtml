@@ -15,7 +15,7 @@
                     <p> Information required for route calculation</p>
                     <div class="form-group input-group-sm">
                         @Html.LabelFor(m => m.PortOrigin)
-                        @Html.TextBoxFor(m => m.PortOrigin, new {@class = "form-control", autofocus = "autofocus", placeholder = "eg. Goteborg"})
+                        @Html.TextBoxFor(m => m.PortOrigin, new {@class = "form-control", id = "portOrigin", autofocus = "autofocus", placeholder = "eg. Goteborg"})
 
                         @Html.LabelFor(m => m.MaxSizeVessel)
                         @Html.TextBoxFor(m => m.MaxSizeVessel, new {@class = "form-control", autofocus = "autofocus", id = "maxSizeVesselInput", placeholder = "eg. 155"})
@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     <div class="form-group input-group-sm">
-                        <button type="submit" class="btn btn-default">Filter</button>
+                        <button type="submit" class="btn btn-primary">Search</button>
                     </div>
                 </td>
             </tr>
@@ -55,7 +55,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">Ports</div>
         <div id="portlist">
-            <div class="portlistings">
+            <div class="portlistings scroll">
                 <table class="table">
                     <tr>
                         <th>
@@ -242,10 +242,11 @@
         </div>
     </div>
     <p class="navbar-text">Calculate route and fuel cost</p>
-    <button type="submit" class="btn btn-default navbar-btn">Calculate</button>
+    <button type="submit" class="btn btn-primary navbar-btn">Calculate</button>
 }
 
 </div>
+
 
 @section scripts {
     <script>
@@ -258,7 +259,17 @@
         }
         if ($('#maxSizeVesselInput').val().length !== 0) {
             $('#portlist').show();
-        } 
+        }
+
+        var model = '@Html.Raw(Json.Encode(@Model.PortNames))';
+        var data = JSON.parse(model);
+
+        $("#portOrigin").autocomplete({
+            source: data,
+            delay: 500,
+            minLength: 3
+        });
+
     </script>
 }
     

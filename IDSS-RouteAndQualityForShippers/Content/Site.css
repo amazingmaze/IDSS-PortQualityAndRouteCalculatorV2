@@ -7,11 +7,16 @@
 
 .jumbotron {
     height: 300px;
+    padding: 10px;
 }
 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
+}
+
+.navbar {
+    font-size: 15px;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -53,6 +58,7 @@ textarea {
 .map {
     height: 600px;
     width: 100%;
+    padding: 15px;
 }
 
 .rankedList {
@@ -69,16 +75,74 @@ textarea {
     table-layout: auto;
 }
 
-.supplies-td {
-    width: 50px;
+.supplies-table td {
     white-space: nowrap;
+    width: 25%;
 }
 
 
 .panel {
     padding-bottom: 20px;
+    padding: 0;
 }
 
 .table {
+    margin: 10px 0 0 10px;
+    max-width: 99%;
+    font-size: 14px;
+}
+
+label {
+    font-size: 14px;
+}
+
+.costs {
     margin: 10px;
+}
+
+#accordion {
+    width: 40%;
+    margin: 15px;
+    border: none;
+    height: 600px;
+    overflow-y: auto;
+}
+
+.ui-state-default {
+    background: #546575;
+    color: #f2efe9;
+    border: none;
+}
+.ui-state-active {
+    font-weight: bold;
+}
+
+.ui-state-hover {
+    font-weight: bold;
+}
+
+.ui-widget-content {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background: #f2efe9;
+}
+
+h4 {
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.scroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    background-color: #546575;
+}
+
+.scroll::-webkit-scrollbar {
+    width: 12px;
+    background-color: #546575;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #df691a;
 }

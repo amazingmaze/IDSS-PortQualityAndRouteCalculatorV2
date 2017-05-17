@@ -9,7 +9,8 @@ namespace IDSS_RouteAndQualityForShippers
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                        "~/Scripts/jquery-{version}.js",
+                        "~/Scripts/jquery-ui.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -25,7 +26,8 @@ namespace IDSS_RouteAndQualityForShippers
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/Site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/jquery-ui.css"));
 
             bundles.Add(new StyleBundle("~/Content/ol").Include(
                       "~/Content/ol.css"));

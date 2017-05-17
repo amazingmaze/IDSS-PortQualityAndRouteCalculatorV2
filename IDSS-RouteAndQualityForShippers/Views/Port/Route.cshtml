@@ -7,31 +7,34 @@
 <div class="container panel panel-default">
     <div class="row">
         
-        <div class="col-sm-12">
-                <table class="table supplies-table">
-                    <tr>
-                        <th>Name</th>
-                        <th>Quality</th>
-                        <th>Supplies</th>
-                        <th>Services</th>
-                    </tr>
-                    <tr>
-                        <td class="portName portData" title="Port name">Select a port</td>
-                        <td class="portQuality portData" title="Quality score"></td>
-                        <td class="supplies-td">
-                            <img class="icon provisions" style="display: none" title="Provisions" src="~/Content/icons/chicken-leg.png" />
-                            <img class="icon water" style="display: none" title="Water" src="~/Content/icons/faucet.png" />
-                            <img class="icon fuelOil" style="display: none" title="Fuel Oil" src="~/Content/icons/barrels.png" />
-                            <img class="icon fuelDiesel" style="display: none" title="Fuel Diesel" src="~/Content/icons/gas-station.png" />
-                            <img class="icon engine" style="display: none" title="Engine" src="~/Content/icons/gear.png" />
-                            <img class="icon deck" style="display: none" title="Deck" src="~/Content/icons/ship.png" />
-                        </td>
-                        <td>
-                            <img class="icon medical" style="display: none" title="Medical" src="~/Content/icons/medical.png" />
-                            <img class="icon garbage" style="display: none" title="Garbage disposal" src="~/Content/icons/recycle-bin.png" />
-                        </td>
-                    </tr>
-                </table>
+        <div class="col-sm-5">
+            <table class="table supplies-table">
+                <tr>
+                    <th>Name</th>
+                    <th>Quality</th>
+                    <th>Supplies</th>
+                    <th>Services</th>
+                </tr>
+                <tr>
+                    <td class="portName portData" title="Port name">Select a port</td>
+                    <td class="portQuality portData" title="Quality score"></td>
+                    <td>
+                        <img class="icon provisions" style="display: none" title="Provisions" src="~/Content/icons/chicken-leg.png" />
+                        <img class="icon water" style="display: none" title="Water" src="~/Content/icons/faucet.png" />
+                        <img class="icon fuelOil" style="display: none" title="Fuel Oil" src="~/Content/icons/barrels.png" />
+                        <img class="icon fuelDiesel" style="display: none" title="Fuel Diesel" src="~/Content/icons/gas-station.png" />
+                        <img class="icon engine" style="display: none" title="Engine" src="~/Content/icons/gear.png" />
+                        <img class="icon deck" style="display: none" title="Deck" src="~/Content/icons/ship.png" />
+                    </td>
+                    <td>
+                        <img class="icon medical" style="display: none" title="Medical" src="~/Content/icons/medical.png" />
+                        <img class="icon garbage" style="display: none" title="Garbage disposal" src="~/Content/icons/recycle-bin.png" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-11">
+            
         </div>
     </div>
     <br/>
@@ -41,12 +44,31 @@
             <div id="map" class="map"></div>
         </div>
         <div class="col-sm-7">
-            <div class="rankedList"> The proposed route </div>
+            <b>The order of the route</b>
+            <div id="accordion" class="scroll">
+
+                @foreach (var port in Model.Route.Select((value, index) => new {index = index + 1, value}))
+                {
+                    <h4> @port.index - @port.value</h4>
+                    <div>
+                        <p>
+                            <!-- TODO: Change when you have time -->
+                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                        </p>
+                    </div>
+                }
+
+
+            </div>
+
         </div>
         
     </div>
     <br/>
-    <div class="row">
+    <div class="row costs">
         <div class="col-sm-4 pull-left">
             <b>Fuel Consumption Cost:</b> $@Model.FuelCost
         </div>
@@ -57,8 +79,18 @@
 </div>
 
 @Scripts.Render("~/bundles/ol")
-<script>
-    var model = '@Html.Raw(Json.Encode(@Model.Ports))';
-    var map = document.getElementById("map");
-    createMap(model, map);
-</script>
+
+@section scripts {
+    <script>
+        var model = '@Html.Raw(Json.Encode(@Model.Ports))';
+        var map = document.getElementById("map");
+        createMap(model, map);
+
+        $("#accordion").accordion({
+            collapsible: true
+        });
+    </script>
+}
+
+
+
