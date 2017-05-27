@@ -28,13 +28,13 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortListViewModel viewModel)
         {
-            var ports = double.Parse(viewModel.MaxSizeVessel) < 152.4
+            var ports = viewModel.MaxSizeVessel < 152.4
                 ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M")
                     .OrderByDescending(p => p.QualityScore)
-                    .Take(Int32.Parse(viewModel.Limit))
+                    .Take(viewModel.Limit)
                 : _context.Ports.Where(p => p.MaxSizeVessel == "L")
                     .OrderByDescending(p => p.QualityScore)
-                    .Take(Int32.Parse(viewModel.Limit));
+                    .Take(viewModel.Limit);
 
 
             foreach (var port in ports.ToList())

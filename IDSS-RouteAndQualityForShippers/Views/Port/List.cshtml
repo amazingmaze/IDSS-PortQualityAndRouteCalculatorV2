@@ -15,28 +15,35 @@
                     <p> Information required for route calculation</p>
                     <div class="form-group input-group-sm">
                         @Html.LabelFor(m => m.PortOrigin)
-                        @Html.TextBoxFor(m => m.PortOrigin, new {@class = "form-control", id = "portOrigin", autofocus = "autofocus", placeholder = "eg. Goteborg"})
+                        @Html.TextBoxFor(m => m.PortOrigin, new {@class = "form-control", id = "portOrigin", autofocus = "autofocus", Value = "SEATTLE"})
+                        @Html.ValidationMessageFor(m => m.PortOrigin, null, new { @class = "help-block" })
 
                         @Html.LabelFor(m => m.MaxSizeVessel)
-                        @Html.TextBoxFor(m => m.MaxSizeVessel, new {@class = "form-control", autofocus = "autofocus", id = "maxSizeVesselInput", placeholder = "eg. 155"})
+                        @Html.TextBoxFor(m => m.MaxSizeVessel, new {@class = "form-control", autofocus = "autofocus", id = "maxSizeVesselInput", Value = "100"})
+                        @Html.ValidationMessageFor(m => m.MaxSizeVessel, null, new { @class = "help-block" })
                     </div>
                 </td>
                 <td>
                     <p> Information regarding fuel cost calculation</p>
                     <div class="form-group input-group-sm">
                         @Html.LabelFor(m => m.DieselPerHour)
-                        @Html.TextBoxFor(m => m.DieselPerHour, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: 16"})
-                        @Html.LabelFor(m => m.DieselTonnePrice)
-                        @Html.TextBoxFor(m => m.DieselTonnePrice, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: $493.64 (2017-05-12)"})
+                        @Html.TextBoxFor(m => m.DieselPerHour, new {@class = "form-control", autofocus = "autofocus", Value = "16"})
+                        @Html.ValidationMessageFor(m => m.DieselPerHour, null, new { @class = "help-block" })
+                        @Html.LabelFor(m => m.DieselTonnePrice, new { id = "dieselTonnePriceLabel" })
+                        @Html.TextBoxFor(m => m.DieselTonnePrice, new {@class = "form-control dieselTonnePrice", autofocus = "autofocus", Value = "493.64"}) <i class="glyphicon glyphicon-info-sign"></i>
+
+                        @Html.ValidationMessageFor(m => m.DieselTonnePrice, null, new { @class = "help-block" })
                         @Html.LabelFor(m => m.AvgSpeed)
-                        @Html.TextBoxFor(m => m.AvgSpeed, new {@class = "form-control", autofocus = "autofocus", placeholder = "default: 24"})
+                        @Html.TextBoxFor(m => m.AvgSpeed, new {@class = "form-control", autofocus = "autofocus", Value = "24"})
+                        @Html.ValidationMessageFor(m => m.AvgSpeed, null, new { @class = "help-block" })
                     </div>
                 </td>
                 <td>
                     <p>Limit search results</p>
                     <div class="form-group input-group-sm">
                         @Html.LabelFor(m => m.Limit)
-                        @Html.TextBoxFor(model => model.Limit, new {@class = "form-control", placeholder = @Html.DisplayNameFor(model => model.Limit)})
+                        @Html.TextBoxFor(model => model.Limit, new {@class = "form-control", Value = "10"})
+                        @Html.ValidationMessageFor(m => m.Limit, null, new { @class = "help-block" })
                     </div>
                 </td>
                 <td>

@@ -215,6 +215,10 @@
     <Compile Include="Migrations\201705121233045_added supplies parameters.Designer.cs">
       <DependentUpon>201705121233045_added supplies parameters.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705181442273_validation.cs" />
+    <Compile Include="Migrations\201705181442273_validation.Designer.cs">
+      <DependentUpon>201705181442273_validation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -336,6 +340,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201705121233045_added supplies parameters.resx">
       <DependentUpon>201705121233045_added supplies parameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705181442273_validation.resx">
+      <DependentUpon>201705181442273_validation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

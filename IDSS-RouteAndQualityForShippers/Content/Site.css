@@ -39,6 +39,9 @@ textarea {
     max-width: 280px;
 }
 
+.help-block {
+    color: red;
+}
 
 /* CUSTOM PAGE SETTINGS */
 
@@ -145,4 +148,12 @@ h4 {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #df691a;
+}
+
+.dieselTonnePrice {
+    display: inline-block;
+}
+
+#dieselTonnePriceLabel {
+    display: block;
 }
