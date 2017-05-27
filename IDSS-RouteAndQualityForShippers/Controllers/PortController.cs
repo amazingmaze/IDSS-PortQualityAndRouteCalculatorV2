@@ -28,11 +28,13 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortListViewModel viewModel)
         {
+            var depthCode = ConvertMetersToCharCode(viewModel.VesselDraft);
+
             var ports = viewModel.MaxSizeVessel < 152.4
-                ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M")
+                ? _context.Ports.Where(p => p.MaxSizeVessel == "L" || p.MaxSizeVessel == "M" && p.CargoDepth.CompareTo(depthCode) >= 0 && p.ChannelDepth.CompareTo(depthCode) >= 0)
                     .OrderByDescending(p => p.QualityScore)
                     .Take(viewModel.Limit)
-                : _context.Ports.Where(p => p.MaxSizeVessel == "L")
+                : _context.Ports.Where(p => p.MaxSizeVessel == "L" && p.CargoDepth.CompareTo(depthCode) >= 0 && p.ChannelDepth.CompareTo(depthCode) >= 0)
                     .OrderByDescending(p => p.QualityScore)
                     .Take(viewModel.Limit);
 
@@ -61,6 +63,7 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
                     MedicalFacilities = port.MedicalFacilities,
                     QualityScore = port.QualityScore,
                     ChannelDepth = port.ChannelDepth,
+                    CargoPierDepth = port.CargoDepth,
                     DieselOil = port.DieselOil,
                     FuelOil = port.FuelOil,
                     Engine = port.Engine,
@@ -75,6 +78,41 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             }
 
             return View(viewModel);
+        }
+
+        public string ConvertMetersToCharCode(double meters)
+        {
+            if (meters >= 23.2)
+                return "A";
+            if (meters >= 21.6)
+                return "B";
+            if (meters >= 20.1)
+                return "C";
+            if (meters >= 18.6)
+                return "D";
+            if (meters >= 17.1)
+                return "E";
+            if (meters >= 15.5)
+                return "F";
+            if (meters >= 14.0)
+                return "G";
+            if (meters >= 12.5)
+                return "H";
+            if (meters >= 11.0)
+                return "J";
+            if (meters >= 9.4)
+                return "K";
+            if (meters >= 7.9)
+                return "L";
+            if (meters >= 6.4)
+                return "M";
+            if (meters >= 4.9)
+                return "N";
+            if (meters >= 3.4)
+                return "O";
+            if (meters >= 1.8)
+                return "P";
+            return "Q";
         }
 
         [HttpPost]

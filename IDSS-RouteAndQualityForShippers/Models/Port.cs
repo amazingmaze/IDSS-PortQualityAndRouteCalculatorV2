@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,9 @@ namespace IDSS_RouteAndQualityForShippers.Models
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
-        //L = Large, M = Medium, S = Small, V = Very Small, U = Unkwown
         [Display(Name = "Harbor size")]
         public string HarborSizeCode { get; set; }
 
-        //E = Excellent, G = Good, F = Fair, P = Poor, N = None, U = Unknown
         public string Shelter { get; set; }
 
         [Display(Name = "Max vessel size")]
@@ -32,6 +31,9 @@ namespace IDSS_RouteAndQualityForShippers.Models
 
         [Display(Name = "Channel depth")]
         public string ChannelDepth { get; set; }
+
+        [Display(Name = "Cargo pier depth")]
+        public string CargoDepth { get; set; }
 
         [Display(Name = "Good holding ground")]
         public string GoodHoldingGround { get; set; }
@@ -107,13 +109,49 @@ namespace IDSS_RouteAndQualityForShippers.Models
             return position.ToString();
         }
 
+
+
         public void CalculateQuality()
         {
 
-            //Harbor size
-            var harborSizeCodeScore = HarborSizeCode == "L" ? 1.0 : 0.5;
+            ////Harbor size
+            //var harborSizeCodeScore = HarborSizeCode == "L" ? 1.0 : 0.5;
 
-            //Harbor type TODO: ADD HARBORYPE?
+            ////Maximum size vessel
+            //var maxSizeVesselScore = MaxSizeVessel == "L" ? 1.0 : 0.5;
+
+            ////Channel
+            //double channelDepthScore;
+            //switch (ChannelDepth)
+            //{
+            //    case "A":
+            //        channelDepthScore = 1;
+            //        break;
+            //    case "B":
+            //    case "C":
+            //    case "D":
+            //        channelDepthScore = 0.75;
+            //        break;
+            //    case "E":
+            //    case "F":
+            //    case "G":
+            //    case "H":
+            //        channelDepthScore = 0.5;
+            //        break;
+            //    case "J":
+            //    case "K":
+            //    case "L":
+            //    case "M":
+            //    case "N":
+            //    case "O":
+            //    case "P":
+            //    case "Q":
+            //        channelDepthScore = 0.25;
+            //        break;
+            //    default:
+            //        channelDepthScore = 0;
+            //        break;
+            //}
 
             //Shelter
             double shelterScore;
@@ -136,44 +174,6 @@ namespace IDSS_RouteAndQualityForShippers.Models
                     break;
             }
 
-            //Maximum size vessel
-            var maxSizeVesselScore = MaxSizeVessel == "L" ? 1.0 : 0.5;
-
-            //Channel
-            double channelDepthScore;
-            switch (ChannelDepth)
-            {
-                case "A":
-                    channelDepthScore = 1;
-                    break;
-                case "B":
-                case "C":
-                case "D":
-                    channelDepthScore = 0.75;
-                    break;
-                case "E":
-                case "F":
-                case "G":
-                case "H":
-                    channelDepthScore = 0.5;
-                    break;
-                case "J":
-                case "K":
-                case "L":
-                case "M":
-                case "N":
-                case "O":
-                case "P":
-                case "Q":
-                    channelDepthScore = 0.25;
-                    break;
-                default:
-                    channelDepthScore = 0;
-                    break;
-            }
-
-            //Oil terminal TODO: ADD OIL TERMINAL?
-
             //Good holding ground
             var goodHoldingGroundScore = GoodHoldingGround == "Y" ? 1.0 : 0.0;
 
@@ -183,7 +183,6 @@ namespace IDSS_RouteAndQualityForShippers.Models
             //Tugs assist
             var tugsAssistScore = TugsAssist == "Y" ? 1.0 : 0.0;
 
-            //Communications TODO: ADD COMMUNICATIONS?
 
             //Medical Facilities
             var medicalFacilitiesScore = MedicalFacilities == "Y" ? 1.0 : 0.0;

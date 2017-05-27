@@ -16,18 +16,23 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         [Display(Name = "Size of vessel (in meters)")]
         public double MaxSizeVessel { get; set; }
 
-        // Information regarding fuel cost calculations
-        [Display(Name = "Diesel consumption per hour in tonnes")]
         [Required]
-        public string DieselPerHour { get; set; }
+        [Range(1, 500)]
+        [Display(Name = "Total draft of vessel (in meters)")]
+        public double VesselDraft { get; set; }
+
+        // Information regarding fuel cost calculations
+        [Display(Name = "Bunker fuel consumption per hour in tonnes")]
+        [Required]
+        public string BunkerPerHour { get; set; }
 
         [Display(Name = "Average speed in knots")]
         [Required]
         public string AvgSpeed { get; set; }
 
-        [Display(Name = "Diesel price per tonne")]
+        [Display(Name = "Bunker price per tonne")]
         [Required]
-        public string DieselTonnePrice { get; set; }
+        public string BunkerTonnePrice { get; set; }
 
         [Required]
         [Range(1, 500)]
@@ -52,8 +57,8 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 
         public void CalculateFuelCost()
         {
-            FuelCost = Math.Floor(double.Parse(DieselPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
-                   double.Parse(DieselTonnePrice)).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," });
+            FuelCost = Math.Floor(double.Parse(BunkerPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
+                   double.Parse(BunkerTonnePrice)).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," });
         }
 
     }

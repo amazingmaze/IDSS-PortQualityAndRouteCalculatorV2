@@ -45,23 +45,13 @@
         </div>
         <div class="col-sm-7">
             <b>The order of the route</b>
-            <div id="accordion" class="scroll">
-
-                @foreach (var port in Model.Route.Select((value, index) => new {index = index + 1, value}))
+            <div class="scroll">
+                @foreach (var port in Model.Route.Select((value, index) => new { index = index + 1, value }))
                 {
-                    <h4> @port.index - @port.value</h4>
                     <div>
-                        <p>
-                            <!-- TODO: Change when you have time -->
-                            Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-                            ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-                            amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-                            odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-                        </p>
+                        @port.index - @port.value
                     </div>
                 }
-
-
             </div>
 
         </div>
@@ -73,7 +63,7 @@
             <b>Fuel Consumption Cost:</b> $@Model.FuelCost
         </div>
         <div class="col-sm-8">
-            <b>Total Distance:</b> @Model.Distance
+            <b>Total Distance:</b> @Model.Distance nautical miles
         </div>
     </div>
 </div>
@@ -85,10 +75,6 @@
         var model = '@Html.Raw(Json.Encode(@Model.Ports))';
         var map = document.getElementById("map");
         createMap(model, map);
-
-        $("#accordion").accordion({
-            collapsible: true
-        });
     </script>
 }
 

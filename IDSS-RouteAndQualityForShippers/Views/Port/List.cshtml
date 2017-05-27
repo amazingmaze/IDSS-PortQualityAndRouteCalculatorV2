@@ -21,18 +21,22 @@
                         @Html.LabelFor(m => m.MaxSizeVessel)
                         @Html.TextBoxFor(m => m.MaxSizeVessel, new {@class = "form-control", autofocus = "autofocus", id = "maxSizeVesselInput", Value = "100"})
                         @Html.ValidationMessageFor(m => m.MaxSizeVessel, null, new { @class = "help-block" })
+                        
+                        @Html.LabelFor(m => m.VesselDraft)
+                        @Html.TextBoxFor(m => m.VesselDraft, new { @class = "form-control", autofocus = "autofocus", id = "vesselDraft", Value = "10" })
+                        @Html.ValidationMessageFor(m => m.VesselDraft, null, new { @class = "help-block" })
                     </div>
                 </td>
                 <td>
                     <p> Information regarding fuel cost calculation</p>
                     <div class="form-group input-group-sm">
-                        @Html.LabelFor(m => m.DieselPerHour)
-                        @Html.TextBoxFor(m => m.DieselPerHour, new {@class = "form-control", autofocus = "autofocus", Value = "16"})
-                        @Html.ValidationMessageFor(m => m.DieselPerHour, null, new { @class = "help-block" })
-                        @Html.LabelFor(m => m.DieselTonnePrice, new { id = "dieselTonnePriceLabel" })
-                        @Html.TextBoxFor(m => m.DieselTonnePrice, new {@class = "form-control dieselTonnePrice", autofocus = "autofocus", Value = "493.64"}) <i class="glyphicon glyphicon-info-sign"></i>
+                        @Html.LabelFor(m => m.BunkerPerHour)
+                        @Html.TextBoxFor(m => m.BunkerPerHour, new {@class = "form-control", autofocus = "autofocus", Value = "16"})
+                        @Html.ValidationMessageFor(m => m.BunkerPerHour, null, new { @class = "help-block" })
+                        @Html.LabelFor(m => m.BunkerTonnePrice, new { id = "dieselTonnePriceLabel" })
+                        @Html.TextBoxFor(m => m.BunkerTonnePrice, new {@class = "form-control dieselTonnePrice", autofocus = "autofocus", Value = "475.76" }) <i class="glyphicon glyphicon-info-sign" title="Updated 2017-05-25"></i>
 
-                        @Html.ValidationMessageFor(m => m.DieselTonnePrice, null, new { @class = "help-block" })
+                        @Html.ValidationMessageFor(m => m.BunkerTonnePrice, null, new { @class = "help-block" })
                         @Html.LabelFor(m => m.AvgSpeed)
                         @Html.TextBoxFor(m => m.AvgSpeed, new {@class = "form-control", autofocus = "autofocus", Value = "24"})
                         @Html.ValidationMessageFor(m => m.AvgSpeed, null, new { @class = "help-block" })
@@ -89,6 +93,9 @@
                         </th>
                         <th title="Channel depth, A = +23.2m, B/C/D = 18.2-23.1m, E/F/G/H = 12.3-18.2m, J-Q = 0-12.2m">
                             @Html.DisplayNameFor(model => model.Ports.First().ChannelDepth)
+                        </th>
+                        <th title="Cargo pier depth, A = +23.2m, B/C/D = 18.2-23.1m, E/F/G/H = 12.3-18.2m, J-Q = 0-12.2m">
+                            @Html.DisplayNameFor(model => model.Ports.First().CargoPierDepth)
                         </th>
                         <th title="Good holding ground">
                             @Html.DisplayNameFor(model => model.Ports.First().GoodHoldingGround)
@@ -178,6 +185,10 @@
                                 @Html.DisplayFor(modelItem => Model.Ports[i].ChannelDepth)
                             </td>
                             <td>
+                                @Html.DisplayFor(modelItem => Model.Ports[i].CargoPierDepth)
+                                @Html.HiddenFor(modelItem => Model.Ports[i].CargoPierDepth)
+                            </td>
+                            <td>
                                 @Html.DisplayFor(modelItem => Model.Ports[i].GoodHoldingGround)
                             </td>
                             <td>
@@ -239,8 +250,8 @@
                     }
 
                     @Html.HiddenFor(modelItem => Model.AvgSpeed)
-                    @Html.HiddenFor(modelItem => Model.DieselPerHour)
-                    @Html.HiddenFor(modelItem => Model.DieselTonnePrice)
+                    @Html.HiddenFor(modelItem => Model.BunkerPerHour)
+                    @Html.HiddenFor(modelItem => Model.BunkerTonnePrice)
                     @Html.HiddenFor(modelItem => Model.PortOrigin)
                     @Html.HiddenFor(modelItem => Model.MaxSizeVessel)
                 </table>

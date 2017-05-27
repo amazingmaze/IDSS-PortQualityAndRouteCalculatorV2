@@ -16,16 +16,16 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         public string Latitude { get; set; }
         public string Longitude { get; set; }
 
-        //L = Large, M = Medium, S = Small, V = Very Small, U = Unkwown
         [Display(Name = "Harbor size")]
         public string HarborSizeCode { get; set; }
 
-        //E = Excellent, G = Good, F = Fair, P = Poor, N = None, U = Unknown
         public string Shelter { get; set; }
         [Display(Name = "Max vessel size")]
         public string MaxSizeVessel { get; set; }
         [Display(Name = "Channel depth")]
         public string ChannelDepth { get; set; }
+        [Display(Name = "Cargo pier depth")]
+        public string CargoPierDepth { get; set; }
         [Display(Name = "Good holding ground")]
         public string GoodHoldingGround { get; set; }
         [Display(Name = "Pilotage available")]

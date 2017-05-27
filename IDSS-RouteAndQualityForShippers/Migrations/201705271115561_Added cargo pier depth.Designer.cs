@@ -7,13 +7,13 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class validation : IMigrationMetadata
+    public sealed partial class Addedcargopierdepth : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(validation));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Addedcargopierdepth));
         
         string IMigrationMetadata.Id
         {
-            get { return "201705181442273_validation"; }
+            get { return "201705271115561_Added cargo pier depth"; }
         }
         
         string IMigrationMetadata.Source

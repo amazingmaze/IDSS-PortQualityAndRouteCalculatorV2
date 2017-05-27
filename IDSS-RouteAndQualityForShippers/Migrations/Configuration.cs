@@ -29,9 +29,6 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
 
         private static void SeedPorts(ApplicationDbContext context)
         {
-            // Get the selected ports from the ports.txt file in App_Data
-            var lines = File.ReadAllLines(MapPath("~/App_Data/ports.txt")); ;
-
 
             // Load XML document
             var doc = XDocument.Load(MapPath("~/App_Data/wpi.xml"));
@@ -43,19 +40,16 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
 
                 var name = xe.Descendants(XName.Get("Main_port_name")).First().Value;
 
-                //if (!lines.Contains(name))
-                //    continue;
-
                 port.Name = name;
 
                 port.RegionIndex = int.Parse(xe.Descendants(XName.Get("Region_index")).First().Value);
                 port.Country = xe.Descendants(XName.Get("Wpi_country_code")).First().Value;
 
-                //Parameters required for Quality
                 port.MaxSizeVessel = port.HarborSizeCode = xe.Descendants(XName.Get("Maxsize_vessel_code")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Maxsize_vessel_code")).First().Value : "U";
                 port.HarborSizeCode = xe.Descendants(XName.Get("Harbor_size_code")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Harbor_size_code")).First().Value : "U";
                 port.Shelter = xe.Descendants(XName.Get("Shelter_afforded_code")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Shelter_afforded_code")).First().Value : "U";
                 port.ChannelDepth = xe.Descendants(XName.Get("Channel_depth")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Channel_depth")).First().Value : "U";
+                port.CargoDepth = xe.Descendants(XName.Get("Cargo_pier_depth")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Cargo_pier_depth")).First().Value : "U";
                 port.GoodHoldingGround = xe.Descendants(XName.Get("Good_holding_ground")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Good_holding_ground")).First().Value : "U";
                 port.PilotageAvailable = xe.Descendants(XName.Get("Pilotage_available")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Pilotage_available")).First().Value : "U";
                 port.TugsAssist = xe.Descendants(XName.Get("Tugs_assist")).FirstOrDefault() != null ? xe.Descendants(XName.Get("Tugs_assist")).First().Value : "U";
@@ -106,8 +100,6 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
                 var lonD = int.Parse(xe.Descendants(XName.Get("Longitude_degrees")).First().Value);
                 var lonM = int.Parse(xe.Descendants(XName.Get("Longitude_minutes")).First().Value);
                 var lonH = xe.Descendants(XName.Get("Longitude_hemisphere")).First().Value;
-
-                //var port = new Port(regionIndex, name, country, harborSizeCode, shelter, maxSizeVessel);
                 port.SetPosition(latD, latM, latH, lonD, lonM, lonH);
                 port.CalculateQuality();
                 context.Ports.AddOrUpdate(port);
