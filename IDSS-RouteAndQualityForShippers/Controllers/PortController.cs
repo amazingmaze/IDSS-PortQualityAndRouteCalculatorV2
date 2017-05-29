@@ -25,6 +25,8 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             return View(new PortListViewModel { PortNames = portNames });
         }
 
+        // Return a list of ports which adhere to the requirements enter by the user
+        // namely MaxSizeVessel and CargoDepth/ChannelDepth
         [HttpPost]
         public ActionResult List(PortListViewModel viewModel)
         {
@@ -80,6 +82,7 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             return View(viewModel);
         }
 
+        // Converts meters into a CharCode which is used in the database (initially used in the World port index database)
         public string ConvertMetersToCharCode(double meters)
         {
             if (meters >= 23.2)
@@ -115,31 +118,22 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             return "Q";
         }
 
+        // Calculates and returns the route
         [HttpPost]
         public ActionResult Route(PortListViewModel viewModel)
         {
 
             // Calculate Route
-            var routeCalculator = new Program();
-
+            var routeCalculator = new RouteCalc();
             var waypoints = new List<string>();
-            //var source = "REYKJAVIK";
-            //waypoints.Add("OSAKA");
-            //waypoints.Add("GEORGETOWN");
-            //waypoints.Add("BORDEAUX");
-            //waypoints.Add("AHUS");
-            //waypoints.Add("REYKJAVIK");
-
             foreach (var port in viewModel.Ports)
             {
                 waypoints.Add(port.Name);
             }
-
-
             var source = viewModel.PortOrigin;
 
             Double distance = 0;
-            var calculatedRoute = routeCalculator.main(waypoints, source, out distance);
+            var calculatedRoute = routeCalculator.Calculate(waypoints, source, out distance);
 
             // Set distance
             viewModel.Distance = distance.ToString();

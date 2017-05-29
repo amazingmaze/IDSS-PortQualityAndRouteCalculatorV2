@@ -230,7 +230,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Route\Bnb.cs" />
     <Compile Include="Services\Route\Node.cs" />
-    <Compile Include="Services\Route\Program.cs" />
+    <Compile Include="Services\Route\RouteCalc.cs" />
     <Compile Include="Services\Route\Table.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

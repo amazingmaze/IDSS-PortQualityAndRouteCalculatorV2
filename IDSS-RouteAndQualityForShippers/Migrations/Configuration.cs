@@ -1,18 +1,16 @@
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Web;
-using System.Web.Configuration;
 using System.Web.Hosting;
 using System.Xml.Linq;
 using IDSS_RouteAndQualityForShippers.Models;
+using System;
+using System.Data.Entity.Migrations;
+using System.Linq;
 
 namespace IDSS_RouteAndQualityForShippers.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+
 
     internal sealed class Configuration : DbMigrationsConfiguration<IDSS_RouteAndQualityForShippers.Models.ApplicationDbContext>
     {
@@ -27,6 +25,7 @@ namespace IDSS_RouteAndQualityForShippers.Migrations
             SeedPorts(context);
         }
 
+        // Seed method to fill the database with data from the World port index
         private static void SeedPorts(ApplicationDbContext context)
         {
 

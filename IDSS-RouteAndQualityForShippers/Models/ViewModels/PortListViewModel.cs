@@ -21,7 +21,6 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         [Display(Name = "Total draft of vessel (in meters)")]
         public double VesselDraft { get; set; }
 
-        // Information regarding fuel cost calculations
         [Display(Name = "Bunker fuel consumption per hour in tonnes")]
         [Required]
         public string BunkerPerHour { get; set; }
@@ -57,8 +56,11 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
 
         public void CalculateFuelCost()
         {
-            FuelCost = Math.Floor(double.Parse(BunkerPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
-                   double.Parse(BunkerTonnePrice)).ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," });
+            var dbl =
+                Math.Floor(double.Parse(BunkerPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
+                           double.Parse(BunkerTonnePrice));
+            var cost = Decimal.Parse(dbl.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," })).ToString("C");
+            FuelCost = cost;
         }
 
     }

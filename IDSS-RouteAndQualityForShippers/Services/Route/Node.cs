@@ -4,8 +4,8 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
 {
     class Node : IComparable
     {
-        public Double Cost;
-        public Double Ocost;
+        public double Cost;
+        public double Ocost;
         public int Id;
 
         public Table Tab { get; set; }
@@ -13,7 +13,7 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
         public Node(Table t, int id)
         {
             Tab = (Table)t.Clone();
-            this.Id = id;
+            Id = id;
         }
 
         public int CompareTo(object obj)
@@ -24,23 +24,8 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             {
                 return Cost.CompareTo(((Node)obj).Cost);
             }
-            else
-            {
-                throw new ArgumentException("Object is not a Node");
-            }
+            throw new ArgumentException("Object is not a Node");
         }
 
-
-        //public int CompareTo(object obj)
-        //{
-        //    if (obj == null) return 1;
-
-        //    if (obj is Node node)
-        //    {
-        //        return Cost.CompareTo(node.Cost);
-        //    }
-        //    else
-        //        throw new ArgumentException("Object is not a Node");
-        //}
     }
 }

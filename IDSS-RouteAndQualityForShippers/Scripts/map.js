@@ -1,8 +1,8 @@
-﻿
+﻿// Javascript code required for visualization of the map.
+// some of the code borrowed from http://jsfiddle.net/6RS2z/356/
 var createMap = function (model, map) {
-    //http://jsfiddle.net/6RS2z/356/
+
     var vectorSource = new ol.source.Vector({
-        //create empty vector
     });
 
     var stroke = new ol.style.Stroke({
@@ -61,6 +61,7 @@ var createMap = function (model, map) {
 
     ];
 
+    // Method to get different colors for the map-markers depending on the type of quality of the port
     var getStyle = function (quality) {
         if (quality > 70) {
             return styles[0];
@@ -73,6 +74,7 @@ var createMap = function (model, map) {
         }
     };
 
+    // Method to create a new feature (a feature is a marker on the map)
     var createFeature = function (item) {
         var iconFeature = new ol.Feature({
             geometry: new
@@ -113,6 +115,7 @@ var createMap = function (model, map) {
         })
     });
 
+    // Create click functions to enable the user to select a port on a map
     map.on("click", function (e) {
         map.forEachFeatureAtPixel(e.pixel, function (feature, layer) {
 
