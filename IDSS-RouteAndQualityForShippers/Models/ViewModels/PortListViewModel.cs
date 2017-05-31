@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
@@ -57,9 +58,13 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         public void CalculateFuelCost()
         {
             var dbl =
-                Math.Floor(double.Parse(BunkerPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
-                           double.Parse(BunkerTonnePrice));
-            var cost = Decimal.Parse(dbl.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," })).ToString("C");
+                Math.Floor(double.Parse(BunkerPerHour, CultureInfo.InvariantCulture) * double.Parse(Distance, CultureInfo.InvariantCulture) / double.Parse(AvgSpeed, CultureInfo.InvariantCulture) *
+                           double.Parse(BunkerTonnePrice, CultureInfo.InvariantCulture));
+
+            //var dbl =
+            //   Math.Floor(double.Parse(BunkerPerHour) * double.Parse(Distance) / double.Parse(AvgSpeed) *
+            //              double.Parse(BunkerTonnePrice));
+            var cost = Decimal.Parse(dbl.ToString(new NumberFormatInfo() { NumberDecimalSeparator = "," })).ToString("C", new CultureInfo("en-SG", false));
             FuelCost = cost;
         }
 

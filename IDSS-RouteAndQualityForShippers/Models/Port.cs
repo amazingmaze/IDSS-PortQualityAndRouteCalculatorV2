@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -106,7 +107,7 @@ namespace IDSS_RouteAndQualityForShippers.Models
             if (direction == "S" || direction == "W")
                 position = position * -1;
 
-            return position.ToString();
+            return Convert.ToString(position, CultureInfo.InvariantCulture);
         }
 
 
