@@ -128,11 +128,19 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             var waypoints = new List<string>();
             foreach (var port in viewModel.Ports)
             {
-                waypoints.Add(port.Name);
+                // Add only selected ports
+                if (port.IsSelected)
+                    waypoints.Add(port.Name);
             }
             var source = viewModel.PortOrigin;
 
             Double distance = 0;
+
+            Debug.WriteLine("Waypoints are: ");
+            foreach (var point in waypoints)
+            {
+                Debug.WriteLine(point);
+            }
             var calculatedRoute = routeCalculator.Calculate(waypoints, source, out distance);
 
             // Set distance
