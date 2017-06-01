@@ -8,45 +8,68 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
 {
     class RouteCalc
     {
-
+        /*
+         Source must be in waypoints its only sets the order of Origin zero
+         Now done inside
+         
+             */
         public List<string> Calculate(List<string> waypoints, string source, out Double distance)
         {
-            List<Tuple<string, string, double>> dist;
-            setfromFile(out dist);
-
+            /*
+             * Reading Distances from file
+             */
+            List<Tuple<string, string, double>> distance_tlist;
+            setfromFile(out distance_tlist);
+            /*
+             * adding source to waypoints
+             */
+            waypoints.Add(source);
             int size = waypoints.Count;
-            Dictionary<string, int> c2num = new Dictionary<string, int>();
+            /*
+             * @waypoints_with_source
+             * Used to arrange waypoints for solver 
+             * i-e source at first 
+             */
+            Dictionary<string, int> waypoints_with_source = new Dictionary<string, int>();
+            /*
+             * @it Dont mess with it 
+             */
             int it = 1;
-            foreach (Tuple<string, string, double> t in dist)
+
+            foreach (Tuple<string, string, double> t in distance_tlist)
             {
-                if (!c2num.ContainsKey(t.Item1) && waypoints.Contains(t.Item1))
+                if (!waypoints_with_source.ContainsKey(t.Item1) && waypoints.Contains(t.Item1))
                 {
                     if (t.Item1.Equals(source))
                     {
-                        c2num.Add(t.Item1, 0);
-
+                        waypoints_with_source.Add(t.Item1, 0);
                     }
                     else
                     {
-                        c2num.Add(t.Item1, it);
+                        waypoints_with_source.Add(t.Item1, it);
                         it++;
                     }
                 }
-                if (!c2num.ContainsKey(t.Item2) && waypoints.Contains(t.Item2))
+                if (!waypoints_with_source.ContainsKey(t.Item2) && waypoints.Contains(t.Item2))
                     if (t.Item2.Equals(source))
-                        c2num.Add(t.Item2, 0);
+                    {
+                        waypoints_with_source.Add(t.Item2, 0);
+                    }
                     else
                     {
-                        c2num.Add(t.Item2, it);
+                        waypoints_with_source.Add(t.Item2, it);
                         it++;
                     }
             }
-
-            Double[,] dmat = new Double[size, size];
-            foreach (Tuple<string, string, double> t in dist)
+            /*
+             * @distance_table Distance table for the problem
+             */
+            Double[,] distance_table = new Double[size, size];
+            foreach (Tuple<string, string, double> t in distance_tlist)
             {
+
                 if (waypoints.Contains(t.Item1) && waypoints.Contains(t.Item2))
-                    dmat[c2num[t.Item1], c2num[t.Item2]] = t.Item3;
+                    distance_table[waypoints_with_source[t.Item1], waypoints_with_source[t.Item2]] = t.Item3;
             }
             for (int i = 0; i < size; i++)
             {
@@ -54,32 +77,39 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
                 {
                     if (i == j)
                     {
-                        dmat[i, j] = Double.PositiveInfinity;
+                        distance_table[i, j] = Double.PositiveInfinity;
                     }
                     else
                     {
-                        dmat[j, i] = dmat[i, j];
+                        distance_table[j, i] = distance_table[i, j];
                     }
                 }
 
             }
-            Table dm = new Table(dmat);
+            /*
+             * @distance_table_new Creating just for safety
+             */
+            Table distance_table_new = new Table(distance_table);
 
-            //this is the path where you get results
-            List<Node> pth = new List<Node>();
-            Table n1 = (Table)dm.Clone();
+            /*
+             * @path is the path where you get results with source in the first place
+             */
+            List<Node> path = new List<Node>();
+            Table n1 = (Table)distance_table_new.Clone();
 
-            Bnb b = new Bnb(n1, out pth);
-            //this is the string of waypoints 
+            Bnb Solver = new Bnb(n1, out path);
 
-            List<string> rl = new List<string>();
-            foreach (Node i in pth)
+            /*
+             * @path_list is the string of waypoints with source at first place
+             */
+            List<string> path_list = new List<string>();
+            foreach (Node i in path)
             {
-                foreach (var c in c2num)
+                foreach (var c in waypoints_with_source)
                 {
                     if (c.Value == i.Id)
                     {
-                        rl.Add(c.Key);
+                        path_list.Add(c.Key);
                         if (Table.DEBUG)
                             Console.WriteLine(c.Key);
                     }
@@ -88,14 +118,20 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
                 if (Table.DEBUG)
                     Console.WriteLine(i.Id + " ocost " + i.Ocost);
             }
+            /*
+             * @distance Sum Distance of nodes
+             */
             distance = 0;
-            foreach (var n in pth)
+            foreach (var n in path)
             {
                 distance += n.Ocost;
             }
-            return rl;
+            return path_list;
         }
-
+        /*
+         * Reading distance from file created by fetching seperately distance
+         * data from sea-distances.org
+         */
         private static void setfromFile(out List<Tuple<string, string, Double>> dist)
         {
             dist = new List<Tuple<string, string, double>>();

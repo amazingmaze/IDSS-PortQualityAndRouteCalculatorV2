@@ -2,17 +2,20 @@
 
 namespace IDSS_RouteAndQualityForShippers.Services.Route
 {
+    /*
+     * Simple Matrix class with basic functions
+     */
     class Table : ICloneable
     {
         public static bool DEBUG = false;
 
         int _size;
-        Double[,] _dmat;
+        Double[,] _node_mat;
         public Double cost;
         public double[,] dmat
         {
-            get { return _dmat; }
-            set { _dmat = value; }
+            get { return _node_mat; }
+            set { _node_mat = value; }
         }
 
         public int size
@@ -24,20 +27,20 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
         public Table(int size, int seed = 8)
         {
             this._size = size;
-            _dmat = new Double[size, size];
+            _node_mat = new Double[size, size];
             Random gen = new Random(seed);
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    _dmat[i, j] = gen.Next(100);
+                    _node_mat[i, j] = gen.Next(100);
                 }
             }
         }
         public Table(Double[,] tab)
         {
             this._size = tab.GetUpperBound(1) + 1;
-            _dmat = (Double[,])tab.Clone();
+            _node_mat = (Double[,])tab.Clone();
         }
         public void add2Column(int column, Double scalar)
         {
@@ -45,7 +48,7 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             for (int i = 0; i < _size; i++)
             {
 
-                _dmat[i, column] += scalar;
+                _node_mat[i, column] += scalar;
 
             }
         }
@@ -55,27 +58,27 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             for (int i = 0; i < _size; i++)
             {
 
-                _dmat[row, i] += scalar;
+                _node_mat[row, i] += scalar;
 
             }
         }
         public Double getMinCol(int column)
         {
             rangecheck(column);
-            Double min = _dmat[0, column];
+            Double min = _node_mat[0, column];
             for (int i = 0; i < _size - 1; i++)
             {
-                min = Math.Min(_dmat[(i + 1), column], min);
+                min = Math.Min(_node_mat[(i + 1), column], min);
             }
             return min;
         }
         public Double getMinrow(int row)
         {
             rangecheck(row);
-            Double min = _dmat[row, 0];
+            Double min = _node_mat[row, 0];
             for (int i = 0; i < _size - 1; i++)
             {
-                min = Math.Min(_dmat[row, (i + 1)], min);
+                min = Math.Min(_node_mat[row, (i + 1)], min);
             }
             return min;
         }
@@ -85,7 +88,7 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             for (int i = 0; i < _size; i++)
             {
 
-                _dmat[i, column] = num;
+                _node_mat[i, column] = num;
 
             }
         }
@@ -95,7 +98,7 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             for (int i = 0; i < _size; i++)
             {
 
-                _dmat[row, i] = num;
+                _node_mat[row, i] = num;
 
             }
         }
@@ -118,13 +121,13 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
             {
                 for (int j = 0; j < _size; j++)
                 {
-                    if (Double.IsPositiveInfinity(_dmat[i, j]))
+                    if (Double.IsPositiveInfinity(_node_mat[i, j]))
                     {
                         Console.Write("i");
                     }
                     else
                     {
-                        System.Console.Write(_dmat[i, j]);
+                        System.Console.Write(_node_mat[i, j]);
                     }
                     System.Console.Write(" ");
                 }
@@ -136,7 +139,7 @@ namespace IDSS_RouteAndQualityForShippers.Services.Route
 
         public object Clone()
         {
-            Table t = new Table((Double[,])_dmat.Clone());
+            Table t = new Table((Double[,])_node_mat.Clone());
             t.cost = 0;
             return t;
         }

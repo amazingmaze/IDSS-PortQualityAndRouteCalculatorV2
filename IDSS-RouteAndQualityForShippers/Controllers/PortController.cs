@@ -126,12 +126,37 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
             // Calculate Route
             var routeCalculator = new RouteCalc();
             var waypoints = new List<string>();
-            foreach (var port in viewModel.Ports)
+            var selectedPorts = new List<PortViewModel>();
+
+            if (viewModel.SelectAll)
             {
-                // Add only selected ports
-                if (port.IsSelected)
-                    waypoints.Add(port.Name);
+                foreach (var port in viewModel.Ports)
+                {
+                    // Add only selected ports
+                    if (port.IsSelected && port.Name != viewModel.PortOrigin)
+                    {
+                        selectedPorts.Add(port);
+                        waypoints.Add(port.Name);
+                    }
+
+                }
             }
+            else
+            {
+                foreach (var port in viewModel.Ports)
+                {
+                    // Add only selected ports
+                    if (port.IsSelected)
+                    {
+                        selectedPorts.Add(port);
+                        waypoints.Add(port.Name);
+                    }
+
+                }
+            }
+
+
+
             var source = viewModel.PortOrigin;
 
             Double distance = 0;
@@ -151,6 +176,9 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
 
             // Calculate fuel cost
             viewModel.CalculateFuelCost();
+
+            // Send only the selected ports
+            viewModel.Ports = selectedPorts;
 
             return View(viewModel);
         }
