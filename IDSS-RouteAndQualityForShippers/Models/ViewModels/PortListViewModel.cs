@@ -18,7 +18,7 @@ namespace IDSS_RouteAndQualityForShippers.Models.ViewModels
         public double MaxSizeVessel { get; set; }
 
         [Required]
-        [Range(1, 500)]
+        [Range(1, 30)]
         [Display(Name = "Total draft of vessel (in meters)")]
         public double VesselDraft { get; set; }
 

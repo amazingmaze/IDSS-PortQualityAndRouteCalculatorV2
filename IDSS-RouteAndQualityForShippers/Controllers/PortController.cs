@@ -30,6 +30,18 @@ namespace IDSS_RouteAndQualityForShippers.Controllers
         [HttpPost]
         public ActionResult List(PortListViewModel viewModel)
         {
+
+            // TODO: Add proper validation. This is just a quick-fix. 
+            if (viewModel.MaxSizeVessel > 500)
+            {
+                return View(new PortListViewModel());
+            }
+
+            if (viewModel.VesselDraft > 30)
+            {
+                return View(new PortListViewModel());
+            }
+
             var depthCode = ConvertMetersToCharCode(viewModel.VesselDraft);
 
             var ports = viewModel.MaxSizeVessel < 152.4
